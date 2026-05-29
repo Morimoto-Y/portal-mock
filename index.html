@@ -34,6 +34,8 @@
     --green-text: #3B6D11;
     --review-bg: #FFF4E0;
     --review-text: #7A4800;
+    --hidden-bg: #F1EFE8;
+    --hidden-text: #5F5E5A;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -58,6 +60,8 @@
       --green-text: #97C459;
       --review-bg: #3d2200;
       --review-text: #FAC775;
+      --hidden-bg: #2c2c2a;
+      --hidden-text: #888780;
     }
   }
 
@@ -66,7 +70,7 @@
     background: var(--bg);
     color: var(--text-primary);
     min-height: 100vh;
-    padding: 1.5rem 1rem 3rem;
+    padding: 0 0 3rem;
   }
 
   .mock-banner {
@@ -77,33 +81,26 @@
     letter-spacing: 0.08em;
     text-align: center;
     padding: 6px;
-    margin: -1.5rem -1rem 1.25rem;
   }
 
   .portal-wrap {
     max-width: 480px;
     margin: 0 auto;
+    padding: 1.25rem 1rem 0;
   }
 
   .portal-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
-  .portal-logo {
-    font-size: 12px;
-    color: var(--text-secondary);
-    font-weight: 500;
-    line-height: 1.6;
-  }
+  .portal-logo { font-size: 12px; color: var(--text-secondary); font-weight: 500; line-height: 1.6; }
 
-  .lang-toggle {
-    display: flex;
-    gap: 4px;
-    flex-shrink: 0;
-  }
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+  .lang-toggle { display: flex; gap: 4px; }
 
   .lang-btn {
     font-size: 12px;
@@ -117,11 +114,74 @@
     transition: background 0.15s;
   }
 
-  .lang-btn.active {
-    background: var(--surface2);
-    color: var(--text-primary);
+  .lang-btn.active { background: var(--surface2); color: var(--text-primary); }
+
+  .logout-btn {
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 3px 9px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
+  .logout-btn:hover { color: var(--text-secondary); border-color: var(--border-md); }
+
+  /* demo toggle */
+  .demo-box {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 10px 14px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .demo-box-label { font-size: 12px; color: var(--text-secondary); }
+  .toggle-row { display: flex; align-items: center; gap: 6px; }
+  .toggle-text { font-size: 11px; color: var(--text-secondary); }
+
+  .toggle-switch {
+    position: relative; width: 40px; height: 22px;
+    cursor: pointer; flex-shrink: 0;
+  }
+
+  .toggle-track {
+    position: absolute; inset: 0; border-radius: 11px;
+    background: #D3D1C7; transition: background 0.2s;
+  }
+
+  .toggle-track.on { background: #639922; }
+
+  .toggle-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: white; transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .toggle-thumb.on { transform: translateX(18px); }
+
+  .demo-select {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 3px 6px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  /* welcome card */
   .welcome-card {
     background: var(--surface);
     border: 0.5px solid var(--border);
@@ -130,108 +190,65 @@
     margin-bottom: 1rem;
   }
 
-  .welcome-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
+  .welcome-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
 
   .avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 42px; height: 42px; border-radius: 50%;
     background: var(--blue-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--blue-text);
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 14px; color: var(--blue-text); flex-shrink: 0;
   }
 
   .welcome-info { flex: 1; }
   .welcome-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
-  .welcome-sub { font-size: 12px; color: var(--text-secondary); }
+  .welcome-sub  { font-size: 12px; color: var(--text-secondary); }
 
   .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: var(--radius-md);
-    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 500; padding: 4px 10px;
+    border-radius: var(--radius-md); flex-shrink: 0;
   }
 
   .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .badge-review { background: var(--amber-bg); color: var(--amber-text); }
-  .badge-review .badge-dot { background: #EF9F27; }
+  .badge-review  { background: var(--amber-bg); color: var(--amber-text); }
+  .badge-review  .badge-dot { background: #EF9F27; }
   .badge-approved { background: var(--green-bg); color: var(--green-text); }
   .badge-approved .badge-dot { background: #639922; }
+  .badge-hidden  { background: var(--hidden-bg); color: var(--hidden-text); }
+  .badge-hidden  .badge-dot { background: #888780; }
 
-  .review-notice {
-    background: var(--review-bg);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    font-size: 12px;
-    color: var(--review-text);
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-    line-height: 1.5;
+  .notice {
+    border-radius: var(--radius-md); padding: 10px 12px;
+    font-size: 12px; display: flex; gap: 8px;
+    align-items: flex-start; line-height: 1.5;
   }
 
-  .review-notice i { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .notice i { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .notice-review  { background: var(--review-bg);  color: var(--review-text); }
+  .notice-hidden  { background: var(--hidden-bg);  color: var(--hidden-text); }
 
   .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    margin: 0 0 0.6rem;
+    font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+    letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 0.6rem;
   }
 
-  .card-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 1.25rem;
-  }
+  .card-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
 
   .info-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0.9rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    text-decoration: none;
-    color: inherit;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 0.9rem 1rem;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: border-color 0.15s;
+    text-decoration: none; color: inherit;
   }
 
   .info-card:hover { border-color: var(--border-md); }
-
-  .info-card.locked {
-    opacity: 0.35;
-    pointer-events: none;
-  }
+  .info-card.locked { opacity: 0.35; pointer-events: none; }
 
   .card-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 17px;
+    width: 34px; height: 34px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 17px;
   }
 
   .icon-blue   { background: var(--blue-bg);   color: var(--blue-text); }
@@ -244,39 +261,25 @@
   .card-desc  { font-size: 12px; color: var(--text-secondary); }
   .card-arrow { color: var(--text-tertiary); font-size: 16px; flex-shrink: 0; }
 
-  .divider {
-    border: none;
-    border-top: 0.5px solid var(--border);
-    margin: 1.1rem 0;
-  }
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.1rem 0; }
 
   .msg-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1.1rem;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem 1.1rem;
   }
 
   .msg-title {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
+    font-size: 14px; font-weight: 500; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 7px;
   }
 
   textarea {
-    width: 100%;
-    height: 76px;
-    resize: none;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
+    width: 100%; height: 76px; resize: none;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
     padding: 8px 10px;
     border: 0.5px solid var(--border-md);
     border-radius: var(--radius-md);
-    background: var(--surface2);
-    color: var(--text-primary);
+    background: var(--surface2); color: var(--text-primary);
   }
 
   textarea:focus { outline: none; border-color: #378ADD; }
@@ -284,78 +287,16 @@
   .msg-footer { display: flex; justify-content: flex-end; margin-top: 8px; }
 
   .send-btn {
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 6px 14px;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
+    padding: 6px 14px; border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md); background: transparent;
+    color: var(--text-primary); cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
   }
 
   .send-btn:hover { background: var(--surface2); }
 
-  /* demo toggle */
-  .demo-box {
-    background: var(--surface2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 10px 14px;
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .demo-box-label { font-size: 12px; color: var(--text-secondary); }
-
-  .toggle-row { display: flex; align-items: center; gap: 8px; }
-  .toggle-text { font-size: 12px; color: var(--text-secondary); }
-  .toggle-text.bold { font-weight: 500; color: var(--text-primary); }
-
-  .toggle-switch {
-    position: relative;
-    width: 40px;
-    height: 22px;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  .toggle-track {
-    position: absolute;
-    inset: 0;
-    border-radius: 11px;
-    background: #D3D1C7;
-    transition: background 0.2s;
-  }
-
-  .toggle-track.on { background: #639922; }
-
-  .toggle-thumb {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: white;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  }
-
-  .toggle-thumb.on { transform: translateX(18px); }
-
-  .footer-note {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    text-align: center;
-    margin-top: 2rem;
-  }
+  .footer-note { font-size: 11px; color: var(--text-tertiary); text-align: center; margin-top: 2rem; }
 </style>
 </head>
 <body>
@@ -366,45 +307,55 @@
 
   <div class="portal-header">
     <div class="portal-logo">Juntendo University<br>International Research Student Portal</div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+    <div class="header-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="ti ti-logout" aria-hidden="true" style="font-size:13px"></i>
+        <span id="logout-label">Sign out</span>
+      </button>
     </div>
   </div>
 
-  <!-- Demo toggle -->
+  <!-- Demo controls -->
   <div class="demo-box">
-    <span class="demo-box-label">Demo: toggle approval status</span>
+    <span class="demo-box-label">Demo: portal status</span>
     <div class="toggle-row">
-      <span class="toggle-text" id="lbl-left" style="font-weight:500;color:var(--text-primary)">Internal Review</span>
-      <div class="toggle-switch" onclick="toggleStatus()" role="switch" aria-checked="false" id="toggle-switch" tabindex="0">
-        <div class="toggle-track" id="track"></div>
-        <div class="toggle-thumb" id="thumb"></div>
-      </div>
-      <span class="toggle-text" id="lbl-right">Approved</span>
+      <select class="demo-select" id="status-select" onchange="applyStatus()">
+        <option value="review">Internal Review</option>
+        <option value="approved">Approved</option>
+        <option value="hidden">Hidden</option>
+      </select>
     </div>
   </div>
 
   <!-- Welcome card -->
   <div class="welcome-card">
     <div class="welcome-top">
-      <div class="avatar">TW</div>
+      <div class="avatar" id="avatar-initials">TW</div>
       <div class="welcome-info">
-        <p class="welcome-name">Tanaka Wei</p>
-        <p class="welcome-sub" id="student-id">International Research Student · 2025 Spring</p>
+        <p class="welcome-name" id="student-name">Tanaka Wei</p>
+        <p class="welcome-sub"  id="student-id">International Research Student · 2025 Spring</p>
       </div>
-      <span class="badge badge-review" id="badge-review">
-        <span class="badge-dot"></span>
-        <span id="status-text">Internal Review</span>
+      <span class="badge badge-review"   id="badge-review">
+        <span class="badge-dot"></span><span id="status-text">Internal Review</span>
       </span>
       <span class="badge badge-approved" id="badge-approved" style="display:none">
-        <span class="badge-dot"></span>
-        <span id="status-text-approved">Approved</span>
+        <span class="badge-dot"></span><span id="status-text-approved">Approved</span>
+      </span>
+      <span class="badge badge-hidden"   id="badge-hidden" style="display:none">
+        <span class="badge-dot"></span><span id="status-text-hidden">Unavailable</span>
       </span>
     </div>
-    <div class="review-notice" id="review-notice">
+    <div class="notice notice-review" id="notice-review">
       <i class="ti ti-info-circle" aria-hidden="true"></i>
-      <span id="notice-text">Your application is currently under review by the faculty committee. The sections below will become accessible once approved.</span>
+      <span id="notice-review-text">Your application is currently under review by the faculty committee. The sections below will become accessible once approved.</span>
+    </div>
+    <div class="notice notice-hidden" id="notice-hidden" style="display:none">
+      <i class="ti ti-ban" aria-hidden="true"></i>
+      <span id="notice-hidden-text">This portal is currently unavailable. Please contact JUIC for assistance.</span>
     </div>
   </div>
 
@@ -467,122 +418,116 @@
 </div>
 
 <script>
-var isApproved = false;
+/* ── session check ── */
+(function() {
+  var raw = localStorage.getItem('juic_session');
+  if (!raw) { window.location.href = 'login.html'; return; }
+  try {
+    var s = JSON.parse(raw);
+    if (!s.expires || Date.now() > s.expires) {
+      localStorage.removeItem('juic_session');
+      window.location.href = 'login.html';
+    }
+  } catch(e) {
+    localStorage.removeItem('juic_session');
+    window.location.href = 'login.html';
+  }
+})();
+
+function doLogout() {
+  localStorage.removeItem('juic_session');
+  window.location.href = 'login.html';
+}
+
+/* ── i18n ── */
 var isJa = false;
 
 var T = {
   en: {
-    studentId:    'International Research Student · 2025 Spring',
-    statusReview: 'Internal Review',
-    statusApproved: 'Approved',
-    notice: 'Your application is currently under review by the faculty committee. The sections below will become accessible once approved.',
+    studentId: 'International Research Student · 2025 Spring',
+    statusReview: 'Internal Review', statusApproved: 'Approved', statusHidden: 'Unavailable',
+    noticeReview: 'Your application is currently under review by the faculty committee. The sections below will become accessible once approved.',
+    noticeHidden: 'This portal is currently unavailable. Please contact JUIC for assistance.',
     labelProc: 'Procedures & Information',
-    titleSV: 'CoE Application · SpeedVisa',
-    descSV:  'Certificate of Eligibility — document upload instructions',
-    titleDorm: 'Dormitory Application',
-    descDorm:  'Application procedure and deadlines',
-    titleLiving: 'Life in Japan',
-    descLiving:  'Ward office, health insurance, JP Bank — pre/post arrival',
-    titleAdm: 'On-campus Procedures',
-    descAdm:  'Tuition, Educational Affairs, check-in schedule',
-    labelContact: 'Contact',
-    msgTitle: 'Send a question to JUIC',
-    msgPH:    'Type your question here…',
-    send:     'Send'
+    titleSV: 'CoE Application · SpeedVisa', descSV: 'Certificate of Eligibility — document upload instructions',
+    titleDorm: 'Dormitory Application',     descDorm: 'Application procedure and deadlines',
+    titleLiving: 'Life in Japan',           descLiving: 'Ward office, health insurance, JP Bank — pre/post arrival',
+    titleAdm: 'On-campus Procedures',       descAdm: 'Tuition, Educational Affairs, check-in schedule',
+    labelContact: 'Contact', msgTitle: 'Send a question to JUIC',
+    msgPH: 'Type your question here…', send: 'Send', logout: 'Sign out',
+    demoLabel: 'Demo: portal status'
   },
   ja: {
-    studentId:    '外国人研究生 · 2025年春学期',
-    statusReview: '審査中',
-    statusApproved: '承認済み',
-    notice: '現在、教授会にて審査中です。承認が完了次第、以下の各セクションにアクセスできるようになります。',
+    studentId: '外国人研究生 · 2025年春学期',
+    statusReview: '審査中', statusApproved: '承認済み', statusHidden: 'アクセス不可',
+    noticeReview: '現在、教授会にて審査中です。承認が完了次第、以下の各セクションにアクセスできるようになります。',
+    noticeHidden: '現在このポータルはご利用いただけません。JUICまでお問い合わせください。',
     labelProc: '手続き・案内',
-    titleSV: 'CoE申請 · SpeedVisa',
-    descSV:  '在留資格認定証明書 — 書類アップロード手順',
-    titleDorm: '入寮申請',
-    descDorm:  '申請手順と締め切りについて',
-    titleLiving: '日本での生活案内',
-    descLiving:  '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
-    titleAdm: '学内手続き',
-    descAdm:  '学費納入・教務課・在籍確認',
-    labelContact: 'お問い合わせ',
-    msgTitle: 'JUICへの質問',
-    msgPH:    'ご質問をこちらに入力してください…',
-    send:     '送信'
+    titleSV: 'CoE申請 · SpeedVisa', descSV: '在留資格認定証明書 — 書類アップロード手順',
+    titleDorm: '入寮申請',           descDorm: '申請手順と締め切りについて',
+    titleLiving: '日本での生活案内', descLiving: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
+    titleAdm: '学内手続き',          descAdm: '学費納入・教務課・在籍確認',
+    labelContact: 'お問い合わせ', msgTitle: 'JUICへの質問',
+    msgPH: 'ご質問をこちらに入力してください…', send: '送信', logout: 'ログアウト',
+    demoLabel: 'デモ: ステータス切替'
   }
 };
 
 function applyLang(lang) {
   var t = T[lang];
-  document.getElementById('student-id').textContent     = t.studentId;
-  document.getElementById('status-text').textContent    = t.statusReview;
-  document.getElementById('status-text-approved').textContent = t.statusApproved;
-  document.getElementById('notice-text').textContent    = t.notice;
-  document.getElementById('label-procedures').textContent = t.labelProc;
-  document.getElementById('title-speedvisa').textContent = t.titleSV;
-  document.getElementById('desc-speedvisa').textContent  = t.descSV;
-  document.getElementById('title-dorm').textContent     = t.titleDorm;
-  document.getElementById('desc-dorm').textContent      = t.descDorm;
-  document.getElementById('title-living').textContent   = t.titleLiving;
-  document.getElementById('desc-living').textContent    = t.descLiving;
-  document.getElementById('title-admission').textContent = t.titleAdm;
-  document.getElementById('desc-admission').textContent  = t.descAdm;
-  document.getElementById('label-contact').textContent  = t.labelContact;
-  document.getElementById('msg-title-text').textContent = t.msgTitle;
-  document.getElementById('msg-area').placeholder       = t.msgPH;
-  document.getElementById('send-label').textContent     = t.send;
-  document.getElementById('lbl-left').textContent       = t.statusReview;
-  document.getElementById('lbl-right').textContent      = t.statusApproved;
+  document.getElementById('student-id').textContent          = t.studentId;
+  document.getElementById('status-text').textContent         = t.statusReview;
+  document.getElementById('status-text-approved').textContent= t.statusApproved;
+  document.getElementById('status-text-hidden').textContent  = t.statusHidden;
+  document.getElementById('notice-review-text').textContent  = t.noticeReview;
+  document.getElementById('notice-hidden-text').textContent  = t.noticeHidden;
+  document.getElementById('label-procedures').textContent    = t.labelProc;
+  document.getElementById('title-speedvisa').textContent     = t.titleSV;
+  document.getElementById('desc-speedvisa').textContent      = t.descSV;
+  document.getElementById('title-dorm').textContent          = t.titleDorm;
+  document.getElementById('desc-dorm').textContent           = t.descDorm;
+  document.getElementById('title-living').textContent        = t.titleLiving;
+  document.getElementById('desc-living').textContent         = t.descLiving;
+  document.getElementById('title-admission').textContent     = t.titleAdm;
+  document.getElementById('desc-admission').textContent      = t.descAdm;
+  document.getElementById('label-contact').textContent       = t.labelContact;
+  document.getElementById('msg-title-text').textContent      = t.msgTitle;
+  document.getElementById('msg-area').placeholder            = t.msgPH;
+  document.getElementById('send-label').textContent          = t.send;
+  document.getElementById('logout-label').textContent        = t.logout;
 }
 
 function applyStatus() {
+  var status = document.getElementById('status-select').value;
   var ids = ['speedvisa','dorm','living','admission'];
-  var track = document.getElementById('track');
-  var thumb  = document.getElementById('thumb');
-  var sw = document.getElementById('toggle-switch');
-  if (isApproved) {
-    document.getElementById('badge-review').style.display   = 'none';
-    document.getElementById('badge-approved').style.display = 'inline-flex';
-    document.getElementById('review-notice').style.display  = 'none';
-    track.className = 'toggle-track on';
-    thumb.className = 'toggle-thumb on';
-    sw.setAttribute('aria-checked','true');
-    document.getElementById('lbl-left').style.fontWeight  = '400';
-    document.getElementById('lbl-left').style.color       = 'var(--text-secondary)';
-    document.getElementById('lbl-right').style.fontWeight = '500';
-    document.getElementById('lbl-right').style.color      = 'var(--text-primary)';
-    ids.forEach(function(id) {
-      document.getElementById('card-'+id).classList.remove('locked');
-      document.getElementById('arrow-'+id).className = 'ti ti-chevron-right card-arrow';
-    });
-  } else {
-    document.getElementById('badge-review').style.display   = 'inline-flex';
-    document.getElementById('badge-approved').style.display = 'none';
-    document.getElementById('review-notice').style.display  = 'flex';
-    track.className = 'toggle-track';
-    thumb.className = 'toggle-thumb';
-    sw.setAttribute('aria-checked','false');
-    document.getElementById('lbl-left').style.fontWeight  = '500';
-    document.getElementById('lbl-left').style.color       = 'var(--text-primary)';
-    document.getElementById('lbl-right').style.fontWeight = '400';
-    document.getElementById('lbl-right').style.color      = 'var(--text-secondary)';
-    ids.forEach(function(id) {
-      document.getElementById('card-'+id).classList.add('locked');
-      document.getElementById('arrow-'+id).className = 'ti ti-lock card-arrow';
-    });
-  }
-}
 
-function toggleStatus() { isApproved = !isApproved; applyStatus(); }
+  document.getElementById('badge-review').style.display    = status === 'review'   ? 'inline-flex' : 'none';
+  document.getElementById('badge-approved').style.display  = status === 'approved' ? 'inline-flex' : 'none';
+  document.getElementById('badge-hidden').style.display    = status === 'hidden'   ? 'inline-flex' : 'none';
+  document.getElementById('notice-review').style.display   = status === 'review'   ? 'flex' : 'none';
+  document.getElementById('notice-hidden').style.display   = status === 'hidden'   ? 'flex' : 'none';
+
+  var locked = (status !== 'approved');
+  ids.forEach(function(id) {
+    var card = document.getElementById('card-'+id);
+    var arrow = document.getElementById('arrow-'+id);
+    if (locked) {
+      card.classList.add('locked');
+      arrow.className = 'ti ti-lock card-arrow';
+    } else {
+      card.classList.remove('locked');
+      arrow.className = 'ti ti-chevron-right card-arrow';
+    }
+  });
+}
 
 function setLang(lang) {
   isJa = lang === 'ja';
-  document.querySelectorAll('.lang-btn').forEach(function(b,i){ b.classList.toggle('active', isJa ? i===1 : i===0); });
+  document.querySelectorAll('.lang-btn').forEach(function(b,i){
+    b.classList.toggle('active', isJa ? i===1 : i===0);
+  });
   applyLang(lang);
 }
-
-document.getElementById('toggle-switch').addEventListener('keydown', function(e){
-  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleStatus(); }
-});
 
 applyStatus();
 </script>
