@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juntendo University — Portal Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.10);
+    --border-md: rgba(0,0,0,0.18);
+    --text-primary: #1a1917;
+    --text-secondary: #6b6a65;
+    --text-tertiary: #a09f9a;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --blue-bg: #E6F1FB;
+    --blue-text: #185FA5;
+    --danger-bg: #FCEBEB;
+    --danger-text: #A32D2D;
+    --danger-border: rgba(162,45,45,0.25);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917;
+      --surface: #242320;
+      --surface2: #2e2d2a;
+      --border: rgba(255,255,255,0.09);
+      --border-md: rgba(255,255,255,0.16);
+      --text-primary: #f0ede8;
+      --text-secondary: #9e9b95;
+      --text-tertiary: #65635e;
+      --blue-bg: #0c2e52;
+      --blue-text: #85B7EB;
+      --danger-bg: #2e1010;
+      --danger-text: #F09595;
+      --danger-border: rgba(240,149,149,0.2);
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .mock-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #1a1917;
+    color: #FAC775;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+    z-index: 100;
+  }
+
+  .login-wrap {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 32px;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .login-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .login-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .login-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .login-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-wrap i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-tertiary);
+    pointer-events: none;
+  }
+
+  .input-wrap input {
+    width: 100%;
+    padding: 10px 10px 10px 34px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--surface2);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .input-wrap input:focus {
+    border-color: #378ADD;
+    background: var(--surface);
+  }
+
+  .input-wrap input.error {
+    border-color: var(--danger-border);
+    background: var(--danger-bg);
+  }
+
+  .error-msg {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--danger-bg);
+    border: 0.5px solid var(--danger-border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--danger-text);
+    margin-bottom: 1rem;
+  }
+
+  .error-msg.show { display: flex; }
+  .error-msg i { font-size: 15px; flex-shrink: 0; }
+
+  .login-btn {
+    width: 100%;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--text-primary);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: opacity 0.15s;
+    margin-top: 0.25rem;
+  }
+
+  .login-btn:hover { opacity: 0.85; }
+  .login-btn:active { opacity: 0.7; }
+  .login-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hint-box {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .hint-box strong {
+    display: block;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .hint-mono {
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">MOCKUP — For internal review only</div>
+
+<div class="login-wrap">
+
+  <div class="login-header">
+    <div class="login-logo"><i class="ti ti-school" aria-hidden="true"></i></div>
+    <h1 class="login-title">Research Student Portal</h1>
+    <p class="login-sub">Juntendo University<br>International Center (JUIC)</p>
+  </div>
+
+  <div class="login-card">
+    <div class="error-msg" id="error-msg">
+      <i class="ti ti-alert-circle" aria-hidden="true"></i>
+      <span id="error-text">Email address or token is incorrect. Please check and try again.</span>
+    </div>
+
+    <div class="field">
+      <label for="email" id="label-email">Email address</label>
+      <div class="input-wrap">
+        <i class="ti ti-mail" aria-hidden="true"></i>
+        <input type="email" id="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="token" id="label-token">Access token</label>
+      <div class="input-wrap">
+        <i class="ti ti-key" aria-hidden="true"></i>
+        <input type="text" id="token" placeholder="xxxxxxxx-xxxx-xxxx" autocomplete="off">
+      </div>
+    </div>
+
+    <button class="login-btn" id="login-btn" onclick="doLogin()">
+      <div class="spinner" id="spinner"></div>
+      <i class="ti ti-arrow-right" id="btn-icon" aria-hidden="true"></i>
+      <span id="btn-label">Sign in</span>
+    </button>
+
+    <!-- Demo hint -->
+    <div class="hint-box">
+      <strong>Demo credentials</strong>
+      Email: <span class="hint-mono">student@example.com</span><br>
+      Token: <span class="hint-mono">DEMO-TOKEN-2025</span>
+    </div>
+  </div>
+
+  <p class="footer-note" id="footer-note">
+    Having trouble? Contact <a href="mailto:juic@juntendo.ac.jp" style="color:inherit">juic@juntendo.ac.jp</a>
+  </p>
+
+</div>
+
+<script>
+/* ── Demo credentials ── */
+var DEMO_USERS = [
+  { email: 'student@example.com',  token: 'DEMO-TOKEN-2025' },
+  { email: 'staff@juntendo.ac.jp', token: 'DEMO-TOKEN-2025' },
+  { email: 'lab@juntendo.ac.jp',   token: 'DEMO-TOKEN-2025' }
+];
+
+var isJa = (navigator.language || '').startsWith('ja');
+
+var T = {
+  en: {
+    labelEmail: 'Email address',
+    labelToken: 'Access token',
+    btnLabel:   'Sign in',
+    errorText:  'Email address or token is incorrect. Please check and try again.',
+    footer:     'Having trouble? Contact '
+  },
+  ja: {
+    labelEmail: 'メールアドレス',
+    labelToken: 'アクセストークン',
+    btnLabel:   'ログイン',
+    errorText:  'メールアドレスまたはトークンが正しくありません。ご確認のうえ再度お試しください。',
+    footer:     'ご不明な点は担当者まで: '
+  }
+};
+
+function applyLang() {
+  var t = isJa ? T.ja : T.en;
+  document.getElementById('label-email').textContent = t.labelEmail;
+  document.getElementById('label-token').textContent = t.labelToken;
+  document.getElementById('btn-label').textContent   = t.btnLabel;
+  document.getElementById('error-text').textContent  = t.errorText;
+}
+
+function doLogin() {
+  var email = document.getElementById('email').value.trim().toLowerCase();
+  var token = document.getElementById('token').value.trim();
+  var btn   = document.getElementById('login-btn');
+  var spinner = document.getElementById('spinner');
+  var icon    = document.getElementById('btn-icon');
+  var errBox  = document.getElementById('error-msg');
+
+  document.getElementById('email').classList.remove('error');
+  document.getElementById('token').classList.remove('error');
+  errBox.classList.remove('show');
+
+  if (!email || !token) {
+    if (!email) document.getElementById('email').classList.add('error');
+    if (!token) document.getElementById('token').classList.add('error');
+    errBox.classList.add('show');
+    return;
+  }
+
+  /* show loading */
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  icon.style.display = 'none';
+
+  /* simulate network delay */
+  setTimeout(function() {
+    var match = DEMO_USERS.find(function(u) {
+      return u.email === email && u.token === token;
+    });
+
+    if (match) {
+      /* store session */
+      var session = {
+        email: email,
+        token: token,
+        expires: Date.now() + 30 * 24 * 60 * 60 * 1000
+      };
+      localStorage.setItem('juic_session', JSON.stringify(session));
+      window.location.href = 'index.html';
+    } else {
+      spinner.style.display = 'none';
+      icon.style.display = 'block';
+      btn.disabled = false;
+      document.getElementById('email').classList.add('error');
+      document.getElementById('token').classList.add('error');
+      errBox.classList.add('show');
+    }
+  }, 900);
+}
+
+/* allow Enter key */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+/* auto-detect language */
+applyLang();
+</script>
+</body>
+</html>
