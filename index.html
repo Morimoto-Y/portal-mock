@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juntendo University — International Research Student Portal (Mock)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.10);
+    --border-md: rgba(0,0,0,0.18);
+    --text-primary: #1a1917;
+    --text-secondary: #6b6a65;
+    --text-tertiary: #a09f9a;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --blue-bg: #E6F1FB;
+    --blue-text: #185FA5;
+    --teal-bg: #E1F5EE;
+    --teal-text: #0F6E56;
+    --amber-bg: #FAEEDA;
+    --amber-text: #854F0B;
+    --purple-bg: #EEEDFE;
+    --purple-text: #534AB7;
+    --green-bg: #EAF3DE;
+    --green-text: #3B6D11;
+    --review-bg: #FFF4E0;
+    --review-text: #7A4800;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917;
+      --surface: #242320;
+      --surface2: #2e2d2a;
+      --border: rgba(255,255,255,0.09);
+      --border-md: rgba(255,255,255,0.16);
+      --text-primary: #f0ede8;
+      --text-secondary: #9e9b95;
+      --text-tertiary: #65635e;
+      --blue-bg: #0c2e52;
+      --blue-text: #85B7EB;
+      --teal-bg: #062e22;
+      --teal-text: #5DCAA5;
+      --amber-bg: #3d2200;
+      --amber-text: #FAC775;
+      --purple-bg: #1e1850;
+      --purple-text: #AFA9EC;
+      --green-bg: #162b05;
+      --green-text: #97C459;
+      --review-bg: #3d2200;
+      --review-text: #FAC775;
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .mock-banner {
+    background: #1a1917;
+    color: #FAC775;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+    margin: -1.5rem -1rem 1.25rem;
+  }
+
+  .portal-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .portal-logo {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 4px 11px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .lang-btn.active {
+    background: var(--surface2);
+    color: var(--text-primary);
+  }
+
+  .welcome-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--blue-text);
+    flex-shrink: 0;
+  }
+
+  .welcome-info { flex: 1; }
+  .welcome-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .welcome-sub { font-size: 12px; color: var(--text-secondary); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge-review { background: var(--amber-bg); color: var(--amber-text); }
+  .badge-review .badge-dot { background: #EF9F27; }
+  .badge-approved { background: var(--green-bg); color: var(--green-text); }
+  .badge-approved .badge-dot { background: #639922; }
+
+  .review-notice {
+    background: var(--review-bg);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--review-text);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .review-notice i { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin: 0 0 0.6rem;
+  }
+
+  .card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .info-card:hover { border-color: var(--border-md); }
+
+  .info-card.locked {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 17px;
+  }
+
+  .icon-blue   { background: var(--blue-bg);   color: var(--blue-text); }
+  .icon-teal   { background: var(--teal-bg);   color: var(--teal-text); }
+  .icon-amber  { background: var(--amber-bg);  color: var(--amber-text); }
+  .icon-purple { background: var(--purple-bg); color: var(--purple-text); }
+
+  .card-body { flex: 1; }
+  .card-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .card-desc  { font-size: 12px; color: var(--text-secondary); }
+  .card-arrow { color: var(--text-tertiary); font-size: 16px; flex-shrink: 0; }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1.1rem 0;
+  }
+
+  .msg-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.1rem;
+  }
+
+  .msg-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 76px;
+    resize: none;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 8px 10px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--surface2);
+    color: var(--text-primary);
+  }
+
+  textarea:focus { outline: none; border-color: #378ADD; }
+
+  .msg-footer { display: flex; justify-content: flex-end; margin-top: 8px; }
+
+  .send-btn {
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 6px 14px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .send-btn:hover { background: var(--surface2); }
+
+  /* demo toggle */
+  .demo-box {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 10px 14px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .demo-box-label { font-size: 12px; color: var(--text-secondary); }
+
+  .toggle-row { display: flex; align-items: center; gap: 8px; }
+  .toggle-text { font-size: 12px; color: var(--text-secondary); }
+  .toggle-text.bold { font-weight: 500; color: var(--text-primary); }
+
+  .toggle-switch {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 11px;
+    background: #D3D1C7;
+    transition: background 0.2s;
+  }
+
+  .toggle-track.on { background: #639922; }
+
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .toggle-thumb.on { transform: translateX(18px); }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">MOCKUP — For internal review only</div>
+
+<div class="portal-wrap">
+
+  <div class="portal-header">
+    <div class="portal-logo">Juntendo University<br>International Research Student Portal</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
+
+  <!-- Demo toggle -->
+  <div class="demo-box">
+    <span class="demo-box-label">Demo: toggle approval status</span>
+    <div class="toggle-row">
+      <span class="toggle-text" id="lbl-left" style="font-weight:500;color:var(--text-primary)">Internal Review</span>
+      <div class="toggle-switch" onclick="toggleStatus()" role="switch" aria-checked="false" id="toggle-switch" tabindex="0">
+        <div class="toggle-track" id="track"></div>
+        <div class="toggle-thumb" id="thumb"></div>
+      </div>
+      <span class="toggle-text" id="lbl-right">Approved</span>
+    </div>
+  </div>
+
+  <!-- Welcome card -->
+  <div class="welcome-card">
+    <div class="welcome-top">
+      <div class="avatar">TW</div>
+      <div class="welcome-info">
+        <p class="welcome-name">Tanaka Wei</p>
+        <p class="welcome-sub" id="student-id">International Research Student · 2025 Spring</p>
+      </div>
+      <span class="badge badge-review" id="badge-review">
+        <span class="badge-dot"></span>
+        <span id="status-text">Internal Review</span>
+      </span>
+      <span class="badge badge-approved" id="badge-approved" style="display:none">
+        <span class="badge-dot"></span>
+        <span id="status-text-approved">Approved</span>
+      </span>
+    </div>
+    <div class="review-notice" id="review-notice">
+      <i class="ti ti-info-circle" aria-hidden="true"></i>
+      <span id="notice-text">Your application is currently under review by the faculty committee. The sections below will become accessible once approved.</span>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <p class="section-label" id="label-procedures">Procedures &amp; Information</p>
+  <div class="card-grid">
+    <a class="info-card locked" id="card-speedvisa" href="#">
+      <div class="card-icon icon-blue"><i class="ti ti-file-certificate" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-speedvisa">CoE Application · SpeedVisa</p>
+        <p class="card-desc"  id="desc-speedvisa">Certificate of Eligibility — document upload instructions</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-speedvisa" aria-hidden="true"></i>
+    </a>
+    <a class="info-card locked" id="card-dorm" href="#">
+      <div class="card-icon icon-teal"><i class="ti ti-building" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-dorm">Dormitory Application</p>
+        <p class="card-desc"  id="desc-dorm">Application procedure and deadlines</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-dorm" aria-hidden="true"></i>
+    </a>
+    <a class="info-card locked" id="card-living" href="#">
+      <div class="card-icon icon-amber"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-living">Life in Japan</p>
+        <p class="card-desc"  id="desc-living">Ward office, health insurance, JP Bank — pre/post arrival</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-living" aria-hidden="true"></i>
+    </a>
+    <a class="info-card locked" id="card-admission" href="#">
+      <div class="card-icon icon-purple"><i class="ti ti-school" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-admission">On-campus Procedures</p>
+        <p class="card-desc"  id="desc-admission">Tuition, Educational Affairs, check-in schedule</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-admission" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label" id="label-contact">Contact</p>
+  <div class="msg-card">
+    <p class="msg-title">
+      <i class="ti ti-message" aria-hidden="true" style="font-size:16px"></i>
+      <span id="msg-title-text">Send a question to JUIC</span>
+    </p>
+    <textarea id="msg-area" placeholder="Type your question here…"></textarea>
+    <div class="msg-footer">
+      <button class="send-btn">
+        <i class="ti ti-send" aria-hidden="true"></i>
+        <span id="send-label">Send</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="footer-note">Juntendo University International Center (JUIC)</p>
+
+</div>
+
+<script>
+var isApproved = false;
+var isJa = false;
+
+var T = {
+  en: {
+    studentId:    'International Research Student · 2025 Spring',
+    statusReview: 'Internal Review',
+    statusApproved: 'Approved',
+    notice: 'Your application is currently under review by the faculty committee. The sections below will become accessible once approved.',
+    labelProc: 'Procedures & Information',
+    titleSV: 'CoE Application · SpeedVisa',
+    descSV:  'Certificate of Eligibility — document upload instructions',
+    titleDorm: 'Dormitory Application',
+    descDorm:  'Application procedure and deadlines',
+    titleLiving: 'Life in Japan',
+    descLiving:  'Ward office, health insurance, JP Bank — pre/post arrival',
+    titleAdm: 'On-campus Procedures',
+    descAdm:  'Tuition, Educational Affairs, check-in schedule',
+    labelContact: 'Contact',
+    msgTitle: 'Send a question to JUIC',
+    msgPH:    'Type your question here…',
+    send:     'Send'
+  },
+  ja: {
+    studentId:    '外国人研究生 · 2025年春学期',
+    statusReview: '審査中',
+    statusApproved: '承認済み',
+    notice: '現在、教授会にて審査中です。承認が完了次第、以下の各セクションにアクセスできるようになります。',
+    labelProc: '手続き・案内',
+    titleSV: 'CoE申請 · SpeedVisa',
+    descSV:  '在留資格認定証明書 — 書類アップロード手順',
+    titleDorm: '入寮申請',
+    descDorm:  '申請手順と締め切りについて',
+    titleLiving: '日本での生活案内',
+    descLiving:  '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
+    titleAdm: '学内手続き',
+    descAdm:  '学費納入・教務課・在籍確認',
+    labelContact: 'お問い合わせ',
+    msgTitle: 'JUICへの質問',
+    msgPH:    'ご質問をこちらに入力してください…',
+    send:     '送信'
+  }
+};
+
+function applyLang(lang) {
+  var t = T[lang];
+  document.getElementById('student-id').textContent     = t.studentId;
+  document.getElementById('status-text').textContent    = t.statusReview;
+  document.getElementById('status-text-approved').textContent = t.statusApproved;
+  document.getElementById('notice-text').textContent    = t.notice;
+  document.getElementById('label-procedures').textContent = t.labelProc;
+  document.getElementById('title-speedvisa').textContent = t.titleSV;
+  document.getElementById('desc-speedvisa').textContent  = t.descSV;
+  document.getElementById('title-dorm').textContent     = t.titleDorm;
+  document.getElementById('desc-dorm').textContent      = t.descDorm;
+  document.getElementById('title-living').textContent   = t.titleLiving;
+  document.getElementById('desc-living').textContent    = t.descLiving;
+  document.getElementById('title-admission').textContent = t.titleAdm;
+  document.getElementById('desc-admission').textContent  = t.descAdm;
+  document.getElementById('label-contact').textContent  = t.labelContact;
+  document.getElementById('msg-title-text').textContent = t.msgTitle;
+  document.getElementById('msg-area').placeholder       = t.msgPH;
+  document.getElementById('send-label').textContent     = t.send;
+  document.getElementById('lbl-left').textContent       = t.statusReview;
+  document.getElementById('lbl-right').textContent      = t.statusApproved;
+}
+
+function applyStatus() {
+  var ids = ['speedvisa','dorm','living','admission'];
+  var track = document.getElementById('track');
+  var thumb  = document.getElementById('thumb');
+  var sw = document.getElementById('toggle-switch');
+  if (isApproved) {
+    document.getElementById('badge-review').style.display   = 'none';
+    document.getElementById('badge-approved').style.display = 'inline-flex';
+    document.getElementById('review-notice').style.display  = 'none';
+    track.className = 'toggle-track on';
+    thumb.className = 'toggle-thumb on';
+    sw.setAttribute('aria-checked','true');
+    document.getElementById('lbl-left').style.fontWeight  = '400';
+    document.getElementById('lbl-left').style.color       = 'var(--text-secondary)';
+    document.getElementById('lbl-right').style.fontWeight = '500';
+    document.getElementById('lbl-right').style.color      = 'var(--text-primary)';
+    ids.forEach(function(id) {
+      document.getElementById('card-'+id).classList.remove('locked');
+      document.getElementById('arrow-'+id).className = 'ti ti-chevron-right card-arrow';
+    });
+  } else {
+    document.getElementById('badge-review').style.display   = 'inline-flex';
+    document.getElementById('badge-approved').style.display = 'none';
+    document.getElementById('review-notice').style.display  = 'flex';
+    track.className = 'toggle-track';
+    thumb.className = 'toggle-thumb';
+    sw.setAttribute('aria-checked','false');
+    document.getElementById('lbl-left').style.fontWeight  = '500';
+    document.getElementById('lbl-left').style.color       = 'var(--text-primary)';
+    document.getElementById('lbl-right').style.fontWeight = '400';
+    document.getElementById('lbl-right').style.color      = 'var(--text-secondary)';
+    ids.forEach(function(id) {
+      document.getElementById('card-'+id).classList.add('locked');
+      document.getElementById('arrow-'+id).className = 'ti ti-lock card-arrow';
+    });
+  }
+}
+
+function toggleStatus() { isApproved = !isApproved; applyStatus(); }
+
+function setLang(lang) {
+  isJa = lang === 'ja';
+  document.querySelectorAll('.lang-btn').forEach(function(b,i){ b.classList.toggle('active', isJa ? i===1 : i===0); });
+  applyLang(lang);
+}
+
+document.getElementById('toggle-switch').addEventListener('keydown', function(e){
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleStatus(); }
+});
+
+applyStatus();
+</script>
+</body>
+</html>
