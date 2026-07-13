@@ -189,37 +189,26 @@
     font-weight: 500;
   }
 
-  .readonly-row {
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .readonly-field {
-    flex: 1;
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: monospace;
+  .note-box {
+    background: var(--surface2);
     border: 0.5px solid var(--border);
     border-radius: var(--radius-md);
-    background: var(--surface2);
-    color: var(--text-secondary);
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .copy-btn {
+    padding: 10px 12px;
+    margin-bottom: 12px;
     font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 9px 12px;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex; align-items: center; gap: 5px;
-    flex-shrink: 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 
-  .copy-btn:hover { background: var(--surface2); }
+  .mono-inline {
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
 
   .save-status {
     font-size: 11px;
@@ -243,7 +232,7 @@
 <div class="portal-wrap">
 
   <div class="portal-header">
-    <div class="portal-logo">Juntendo University<br>International Research Student Portal</div>
+    <div class="portal-logo">Juntendo University<br>International Student/Researcher Portal</div>
     <div class="header-right">
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -276,24 +265,13 @@
   <div class="field-card">
     <p class="field-title"><i class="ti ti-clock-check" aria-hidden="true"></i><span id="title-firstday">First-day adjustment status</span></p>
     <p class="field-desc" id="desc-firstday">Status of coordinating your first day at the university.</p>
+    <p class="note-box" id="lab-contact-note"></p>
     <div class="status-toggle-group">
       <button class="status-btn" id="status-btn-まだ" data-value="まだ" onclick="selectFirstDayStatus('まだ')">Not yet</button>
       <button class="status-btn" id="status-btn-調整中" data-value="調整中" onclick="selectFirstDayStatus('調整中')">In progress</button>
       <button class="status-btn" id="status-btn-調整済み" data-value="調整済み" onclick="selectFirstDayStatus('調整済み')">Confirmed</button>
     </div>
     <div class="save-status" id="firstday-save-status"><i class="ti ti-check" aria-hidden="true"></i><span id="firstday-save-text"></span></div>
-  </div>
-
-  <!-- SpeedVisa login ID -->
-  <div class="field-card">
-    <p class="field-title"><i class="ti ti-key" aria-hidden="true"></i><span id="title-speedvisa">SpeedVisa login ID</span></p>
-    <p class="field-desc" id="desc-speedvisa">Use this ID to sign in to the SpeedVisa system.</p>
-    <div class="readonly-row">
-      <div class="readonly-field" id="speedvisa-id-value">—</div>
-      <button class="copy-btn" onclick="copySpeedvisaId()">
-        <i class="ti ti-copy" aria-hidden="true"></i><span id="copy-label">Copy</span>
-      </button>
-    </div>
   </div>
 
   <p class="footer-note">Juntendo University International Center (JUIC)</p>
@@ -316,7 +294,7 @@ var session = null;
       window.location.href = 'login.html';
       return;
     }
-    if (s.portal_status !== '承認') {
+    if (s.portal_status !== '承認' || s.show_arrival === false) {
       window.location.href = 'index.html';
       return;
     }
@@ -347,9 +325,8 @@ var T = {
     pageSub: 'Let JUIC know your arrival plans. Changes are saved automatically.',
     titleArrival: 'Expected arrival date', descArrival: 'Enter the date you plan to arrive in Japan.',
     titleFirstday: 'First-day adjustment status', descFirstday: 'Status of coordinating your first day at the university.',
+    labNote: 'Please coordinate with your laboratory contact ({{LAB_EMAIL}}) regarding your first-day schedule, including the time and location where you should report.',
     statusNotYet: 'Not yet', statusInProgress: 'In progress', statusConfirmed: 'Confirmed',
-    titleSpeedvisa: 'SpeedVisa login ID', descSpeedvisa: 'Use this ID to sign in to the SpeedVisa system.',
-    copy: 'Copy', copied: 'Copied',
     saved: 'Saved', saveError: 'Could not save. Please try again.'
   },
   ja: {
@@ -358,12 +335,17 @@ var T = {
     pageSub: '来日予定について事務局にお知らせください。変更は自動的に保存されます。',
     titleArrival: '来日予定日', descArrival: '日本への来日予定日を入力してください。',
     titleFirstday: '初日調整状況', descFirstday: '大学での初日の調整状況について。',
+    labNote: '初日にどこに何時に行けばよいか、受入講座の担当者（{{LAB_EMAIL}}）と事前にご調整ください。',
     statusNotYet: 'まだ', statusInProgress: '調整中', statusConfirmed: '調整済み',
-    titleSpeedvisa: 'SpeedVisaログインID', descSpeedvisa: 'SpeedVisaシステムへのログインにこのIDを使用してください。',
-    copy: 'コピー', copied: 'コピーしました',
     saved: '保存しました', saveError: '保存できませんでした。再度お試しください。'
   }
 };
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
 
 function applyLang(lang) {
   var t = T[lang];
@@ -378,9 +360,9 @@ function applyLang(lang) {
   document.getElementById('status-btn-まだ').textContent    = t.statusNotYet;
   document.getElementById('status-btn-調整中').textContent  = t.statusInProgress;
   document.getElementById('status-btn-調整済み').textContent = t.statusConfirmed;
-  document.getElementById('title-speedvisa').textContent = t.titleSpeedvisa;
-  document.getElementById('desc-speedvisa').textContent  = t.descSpeedvisa;
-  document.getElementById('copy-label').textContent      = t.copy;
+  var labEmail = (session && session.lab_email) ? session.lab_email : '—';
+  document.getElementById('lab-contact-note').innerHTML =
+    t.labNote.replace('{{LAB_EMAIL}}', '<span class="mono-inline">' + escapeHtml(labEmail) + '</span>');
 }
 
 function setLang(lang) {
@@ -434,18 +416,6 @@ document.getElementById('arrival-date-input').addEventListener('change', functio
   if (this.value) updateField('arrival_date', this.value, 'arrival');
 });
 
-function copySpeedvisaId() {
-  var t = isJa ? T.ja : T.en;
-  var value = session.speedvisa_id || '';
-  if (!value) return;
-  navigator.clipboard.writeText(value).then(function() {
-    var label = document.getElementById('copy-label');
-    var original = t.copy;
-    label.textContent = t.copied;
-    setTimeout(function() { label.textContent = original; }, 1500);
-  });
-}
-
 /* ── populate from session ── */
 if (session) {
   if (session.arrival_date) document.getElementById('arrival-date-input').value = session.arrival_date;
@@ -454,7 +424,6 @@ if (session) {
       document.getElementById('status-btn-' + v).classList.toggle('selected', v === session.first_day_status);
     });
   }
-  document.getElementById('speedvisa-id-value').textContent = session.speedvisa_id || '—';
 }
 applyLang('en');
 </script>

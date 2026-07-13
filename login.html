@@ -264,7 +264,7 @@
 
   <div class="login-header">
     <div class="login-logo"><i class="ti ti-school" aria-hidden="true"></i></div>
-    <h1 class="login-title">Research Student Portal</h1>
+    <h1 class="login-title">International Student/Researcher Portal</h1>
     <p class="login-sub">Juntendo University<br>International Center (JUIC)</p>
   </div>
 
@@ -387,6 +387,12 @@ async function doLogin() {
         arrival_date: data.arrival_date,
         first_day_status: data.first_day_status,
         speedvisa_id: data.speedvisa_id,
+        lab_email: data.lab_email,
+        show_coe: data.show_coe,
+        show_dorm: data.show_dorm,
+        show_life: data.show_life,
+        show_oncampus: data.show_oncampus,
+        show_arrival: data.show_arrival,
         expires: Date.now() + SESSION_TTL_MS
       };
       localStorage.setItem('juic_session', JSON.stringify(session));

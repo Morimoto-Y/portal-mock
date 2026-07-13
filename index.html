@@ -307,7 +307,7 @@
 <div class="portal-wrap">
 
   <div class="portal-header">
-    <div class="portal-logo">Juntendo University<br>International Research Student Portal</div>
+    <div class="portal-logo">Juntendo University<br>International Student/Researcher Portal</div>
     <div class="header-right">
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -351,7 +351,7 @@
   <!-- Sections -->
   <p class="section-label" id="label-procedures">Procedures &amp; Information</p>
   <div class="card-grid">
-    <a class="info-card locked" id="card-speedvisa" href="#">
+    <a class="info-card locked" id="card-speedvisa" href="coe.html">
       <div class="card-icon icon-blue"><i class="ti ti-file-certificate" aria-hidden="true"></i></div>
       <div class="card-body">
         <p class="card-title" id="title-speedvisa">CoE Application · SpeedVisa</p>
@@ -359,7 +359,7 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-speedvisa" aria-hidden="true"></i>
     </a>
-    <a class="info-card locked" id="card-dorm" href="#">
+    <a class="info-card locked" id="card-dorm" href="dormitory.html">
       <div class="card-icon icon-teal"><i class="ti ti-building" aria-hidden="true"></i></div>
       <div class="card-body">
         <p class="card-title" id="title-dorm">Dormitory Application</p>
@@ -367,7 +367,7 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-dorm" aria-hidden="true"></i>
     </a>
-    <a class="info-card locked" id="card-living" href="#">
+    <a class="info-card locked" id="card-living" href="life.html">
       <div class="card-icon icon-amber"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
       <div class="card-body">
         <p class="card-title" id="title-living">Life in Japan</p>
@@ -375,7 +375,7 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-living" aria-hidden="true"></i>
     </a>
-    <a class="info-card locked" id="card-admission" href="#">
+    <a class="info-card locked" id="card-admission" href="oncampus.html">
       <div class="card-icon icon-purple"><i class="ti ti-school" aria-hidden="true"></i></div>
       <div class="card-body">
         <p class="card-title" id="title-admission">On-campus Procedures</p>
@@ -445,6 +445,25 @@ var STATUS_MAP = {
   '承認': 'approved',
   'ポータル非表示': 'hidden'
 };
+
+/* ── section visibility (independent of the approval lock) ── */
+var VISIBILITY_MAP = {
+  speedvisa: 'show_coe',
+  dorm: 'show_dorm',
+  living: 'show_life',
+  admission: 'show_oncampus',
+  notifications: 'show_arrival'
+};
+
+function applyVisibility() {
+  if (!session) return;
+  Object.keys(VISIBILITY_MAP).forEach(function(id) {
+    var key = VISIBILITY_MAP[id];
+    var card = document.getElementById('card-' + id);
+    var visible = session[key] !== false;
+    card.style.display = visible ? 'flex' : 'none';
+  });
+}
 
 function getInitials(name) {
   if (!name) return '--';
@@ -552,6 +571,7 @@ if (session) {
 }
 applyLang('en');
 applyStatus();
+applyVisibility();
 </script>
 </body>
 </html>
