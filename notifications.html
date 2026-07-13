@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juntendo University — Notify University of Arrival</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.10);
+    --border-md: rgba(0,0,0,0.18);
+    --text-primary: #1a1917;
+    --text-secondary: #6b6a65;
+    --text-tertiary: #a09f9a;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --blue-bg: #E6F1FB;
+    --blue-text: #185FA5;
+    --green-bg: #EAF3DE;
+    --green-text: #3B6D11;
+    --danger-bg: #FCEBEB;
+    --danger-text: #A32D2D;
+    --danger-border: rgba(162,45,45,0.25);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917;
+      --surface: #242320;
+      --surface2: #2e2d2a;
+      --border: rgba(255,255,255,0.09);
+      --border-md: rgba(255,255,255,0.16);
+      --text-primary: #f0ede8;
+      --text-secondary: #9e9b95;
+      --text-tertiary: #65635e;
+      --blue-bg: #0c2e52;
+      --blue-text: #85B7EB;
+      --green-bg: #162b05;
+      --green-text: #97C459;
+      --danger-bg: #2e1010;
+      --danger-text: #F09595;
+      --danger-border: rgba(240,149,149,0.2);
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 0 0 3rem;
+  }
+
+  .mock-banner {
+    background: #1a1917;
+    color: #FAC775;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+  }
+
+  .portal-wrap { max-width: 480px; margin: 0 auto; padding: 1.25rem 1rem 0; }
+
+  .portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .portal-logo { font-size: 12px; color: var(--text-secondary); font-weight: 500; line-height: 1.6; }
+
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+  .lang-toggle { display: flex; gap: 4px; }
+
+  .lang-btn {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 4px 11px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .lang-btn.active { background: var(--surface2); color: var(--text-primary); }
+
+  .logout-btn {
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 3px 9px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .logout-btn:hover { color: var(--text-secondary); border-color: var(--border-md); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .back-link:hover { color: var(--text-primary); }
+
+  .page-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .page-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .field-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-title {
+    font-size: 14px; font-weight: 500; margin-bottom: 2px;
+    display: flex; align-items: center; gap: 7px;
+  }
+
+  .field-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5; }
+
+  input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--surface2);
+    color: var(--text-primary);
+    outline: none;
+  }
+
+  input[type="date"]:focus { border-color: #378ADD; background: var(--surface); }
+
+  .status-toggle-group { display: flex; gap: 8px; }
+
+  .status-btn {
+    flex: 1;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 10px 6px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--surface2);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .status-btn.selected {
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    border-color: var(--blue-text);
+    font-weight: 500;
+  }
+
+  .readonly-row {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .readonly-field {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: monospace;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface2);
+    color: var(--text-secondary);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .copy-btn {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 9px 12px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover { background: var(--surface2); }
+
+  .save-status {
+    font-size: 11px;
+    margin-top: 8px;
+    display: none;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .save-status.show { display: flex; }
+  .save-status.ok { color: var(--green-text); }
+  .save-status.err { color: var(--danger-text); }
+
+  .footer-note { font-size: 11px; color: var(--text-tertiary); text-align: center; margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">BETA</div>
+
+<div class="portal-wrap">
+
+  <div class="portal-header">
+    <div class="portal-logo">Juntendo University<br>International Research Student Portal</div>
+    <div class="header-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="ti ti-logout" aria-hidden="true" style="font-size:13px"></i>
+        <span id="logout-label">Sign out</span>
+      </button>
+    </div>
+  </div>
+
+  <a class="back-link" href="index.html">
+    <i class="ti ti-arrow-left" aria-hidden="true"></i>
+    <span id="back-label">Back to portal</span>
+  </a>
+
+  <p class="page-title" id="page-title">Notify University of Arrival</p>
+  <p class="page-sub" id="page-sub">Let JUIC know your arrival plans. Changes are saved automatically.</p>
+
+  <!-- Arrival date -->
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-calendar-event" aria-hidden="true"></i><span id="title-arrival">Expected arrival date</span></p>
+    <p class="field-desc" id="desc-arrival">Enter the date you plan to arrive in Japan.</p>
+    <input type="date" id="arrival-date-input">
+    <div class="save-status" id="arrival-save-status"><i class="ti ti-check" aria-hidden="true"></i><span id="arrival-save-text"></span></div>
+  </div>
+
+  <!-- First-day adjustment status -->
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-clock-check" aria-hidden="true"></i><span id="title-firstday">First-day adjustment status</span></p>
+    <p class="field-desc" id="desc-firstday">Status of coordinating your first day at the university.</p>
+    <div class="status-toggle-group">
+      <button class="status-btn" id="status-btn-まだ" data-value="まだ" onclick="selectFirstDayStatus('まだ')">Not yet</button>
+      <button class="status-btn" id="status-btn-調整中" data-value="調整中" onclick="selectFirstDayStatus('調整中')">In progress</button>
+      <button class="status-btn" id="status-btn-調整済み" data-value="調整済み" onclick="selectFirstDayStatus('調整済み')">Confirmed</button>
+    </div>
+    <div class="save-status" id="firstday-save-status"><i class="ti ti-check" aria-hidden="true"></i><span id="firstday-save-text"></span></div>
+  </div>
+
+  <!-- SpeedVisa login ID -->
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-key" aria-hidden="true"></i><span id="title-speedvisa">SpeedVisa login ID</span></p>
+    <p class="field-desc" id="desc-speedvisa">Use this ID to sign in to the SpeedVisa system.</p>
+    <div class="readonly-row">
+      <div class="readonly-field" id="speedvisa-id-value">—</div>
+      <button class="copy-btn" onclick="copySpeedvisaId()">
+        <i class="ti ti-copy" aria-hidden="true"></i><span id="copy-label">Copy</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="footer-note">Juntendo University International Center (JUIC)</p>
+
+</div>
+
+<script>
+/* ── API ── */
+var WORKER_URL = 'https://kintone-portal-worker.babau.workers.dev';
+
+/* ── session check (approved students only) ── */
+var session = null;
+(function() {
+  var raw = localStorage.getItem('juic_session');
+  if (!raw) { window.location.href = 'login.html'; return; }
+  try {
+    var s = JSON.parse(raw);
+    if (!s.expires || Date.now() > s.expires) {
+      localStorage.removeItem('juic_session');
+      window.location.href = 'login.html';
+      return;
+    }
+    if (s.portal_status !== '承認') {
+      window.location.href = 'index.html';
+      return;
+    }
+    session = s;
+  } catch(e) {
+    localStorage.removeItem('juic_session');
+    window.location.href = 'login.html';
+  }
+})();
+
+function doLogout() {
+  localStorage.removeItem('juic_session');
+  window.location.href = 'login.html';
+}
+
+function persistSessionField(field, value) {
+  session[field] = value;
+  localStorage.setItem('juic_session', JSON.stringify(session));
+}
+
+/* ── i18n ── */
+var isJa = false;
+
+var T = {
+  en: {
+    logout: 'Sign out', back: 'Back to portal',
+    pageTitle: 'Notify University of Arrival',
+    pageSub: 'Let JUIC know your arrival plans. Changes are saved automatically.',
+    titleArrival: 'Expected arrival date', descArrival: 'Enter the date you plan to arrive in Japan.',
+    titleFirstday: 'First-day adjustment status', descFirstday: 'Status of coordinating your first day at the university.',
+    statusNotYet: 'Not yet', statusInProgress: 'In progress', statusConfirmed: 'Confirmed',
+    titleSpeedvisa: 'SpeedVisa login ID', descSpeedvisa: 'Use this ID to sign in to the SpeedVisa system.',
+    copy: 'Copy', copied: 'Copied',
+    saved: 'Saved', saveError: 'Could not save. Please try again.'
+  },
+  ja: {
+    logout: 'ログアウト', back: 'ポータルへ戻る',
+    pageTitle: '来日予定日・初日調整の連絡',
+    pageSub: '来日予定について事務局にお知らせください。変更は自動的に保存されます。',
+    titleArrival: '来日予定日', descArrival: '日本への来日予定日を入力してください。',
+    titleFirstday: '初日調整状況', descFirstday: '大学での初日の調整状況について。',
+    statusNotYet: 'まだ', statusInProgress: '調整中', statusConfirmed: '調整済み',
+    titleSpeedvisa: 'SpeedVisaログインID', descSpeedvisa: 'SpeedVisaシステムへのログインにこのIDを使用してください。',
+    copy: 'コピー', copied: 'コピーしました',
+    saved: '保存しました', saveError: '保存できませんでした。再度お試しください。'
+  }
+};
+
+function applyLang(lang) {
+  var t = T[lang];
+  document.getElementById('logout-label').textContent   = t.logout;
+  document.getElementById('back-label').textContent     = t.back;
+  document.getElementById('page-title').textContent     = t.pageTitle;
+  document.getElementById('page-sub').textContent       = t.pageSub;
+  document.getElementById('title-arrival').textContent  = t.titleArrival;
+  document.getElementById('desc-arrival').textContent   = t.descArrival;
+  document.getElementById('title-firstday').textContent = t.titleFirstday;
+  document.getElementById('desc-firstday').textContent  = t.descFirstday;
+  document.getElementById('status-btn-まだ').textContent    = t.statusNotYet;
+  document.getElementById('status-btn-調整中').textContent  = t.statusInProgress;
+  document.getElementById('status-btn-調整済み').textContent = t.statusConfirmed;
+  document.getElementById('title-speedvisa').textContent = t.titleSpeedvisa;
+  document.getElementById('desc-speedvisa').textContent  = t.descSpeedvisa;
+  document.getElementById('copy-label').textContent      = t.copy;
+}
+
+function setLang(lang) {
+  isJa = lang === 'ja';
+  document.querySelectorAll('.lang-btn').forEach(function(b,i){
+    b.classList.toggle('active', isJa ? i===1 : i===0);
+  });
+  applyLang(lang);
+}
+
+/* ── save status indicator ── */
+function showSaveStatus(prefix, ok) {
+  var t = isJa ? T.ja : T.en;
+  var box = document.getElementById(prefix + '-save-status');
+  var text = document.getElementById(prefix + '-save-text');
+  box.classList.remove('ok', 'err');
+  box.classList.add(ok ? 'ok' : 'err');
+  text.textContent = ok ? t.saved : t.saveError;
+  box.classList.add('show');
+  setTimeout(function() { box.classList.remove('show'); }, 2500);
+}
+
+/* ── Kintone update via Worker ── */
+async function updateField(field, value, statusPrefix) {
+  try {
+    var res = await fetch(WORKER_URL + '/api/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: session.token, field: field, value: value })
+    });
+    var data = await res.json();
+    if (res.ok && data.success) {
+      persistSessionField(field, value);
+      showSaveStatus(statusPrefix, true);
+    } else {
+      showSaveStatus(statusPrefix, false);
+    }
+  } catch (e) {
+    showSaveStatus(statusPrefix, false);
+  }
+}
+
+function selectFirstDayStatus(value) {
+  ['まだ','調整中','調整済み'].forEach(function(v) {
+    document.getElementById('status-btn-' + v).classList.toggle('selected', v === value);
+  });
+  updateField('first_day_status', value, 'firstday');
+}
+
+document.getElementById('arrival-date-input').addEventListener('change', function() {
+  if (this.value) updateField('arrival_date', this.value, 'arrival');
+});
+
+function copySpeedvisaId() {
+  var t = isJa ? T.ja : T.en;
+  var value = session.speedvisa_id || '';
+  if (!value) return;
+  navigator.clipboard.writeText(value).then(function() {
+    var label = document.getElementById('copy-label');
+    var original = t.copy;
+    label.textContent = t.copied;
+    setTimeout(function() { label.textContent = original; }, 1500);
+  });
+}
+
+/* ── populate from session ── */
+if (session) {
+  if (session.arrival_date) document.getElementById('arrival-date-input').value = session.arrival_date;
+  if (session.first_day_status) {
+    ['まだ','調整中','調整済み'].forEach(function(v) {
+      document.getElementById('status-btn-' + v).classList.toggle('selected', v === session.first_day_status);
+    });
+  }
+  document.getElementById('speedvisa-id-value').textContent = session.speedvisa_id || '—';
+}
+applyLang('en');
+</script>
+</body>
+</html>

@@ -255,6 +255,7 @@
   .icon-teal   { background: var(--teal-bg);   color: var(--teal-text); }
   .icon-amber  { background: var(--amber-bg);  color: var(--amber-text); }
   .icon-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .icon-green  { background: var(--green-bg);  color: var(--green-text); }
 
   .card-body { flex: 1; }
   .card-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
@@ -301,7 +302,7 @@
 </head>
 <body>
 
-<div class="mock-banner">MOCKUP — For internal review only</div>
+<div class="mock-banner">BETA</div>
 
 <div class="portal-wrap">
 
@@ -319,25 +320,13 @@
     </div>
   </div>
 
-  <!-- Demo controls -->
-  <div class="demo-box">
-    <span class="demo-box-label">Demo: portal status</span>
-    <div class="toggle-row">
-      <select class="demo-select" id="status-select" onchange="applyStatus()">
-        <option value="review">Internal Review</option>
-        <option value="approved">Approved</option>
-        <option value="hidden">Hidden</option>
-      </select>
-    </div>
-  </div>
-
   <!-- Welcome card -->
   <div class="welcome-card">
     <div class="welcome-top">
       <div class="avatar" id="avatar-initials">TW</div>
       <div class="welcome-info">
-        <p class="welcome-name" id="student-name">Tanaka Wei</p>
-        <p class="welcome-sub"  id="student-id">International Research Student · 2025 Spring</p>
+        <p class="welcome-name" id="student-name">—</p>
+        <p class="welcome-sub"  id="student-id">—</p>
       </div>
       <span class="badge badge-review"   id="badge-review">
         <span class="badge-dot"></span><span id="status-text">Internal Review</span>
@@ -394,6 +383,14 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-admission" aria-hidden="true"></i>
     </a>
+    <a class="info-card locked" id="card-notifications" href="notifications.html">
+      <div class="card-icon icon-green"><i class="ti ti-calendar-event" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-notifications">Notify University of Arrival</p>
+        <p class="card-desc"  id="desc-notifications">Arrival date and first-day adjustment status</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-notifications" aria-hidden="true"></i>
+    </a>
   </div>
 
   <hr class="divider">
@@ -419,6 +416,7 @@
 
 <script>
 /* ── session check ── */
+var session = null;
 (function() {
   var raw = localStorage.getItem('juic_session');
   if (!raw) { window.location.href = 'login.html'; return; }
@@ -427,7 +425,9 @@
     if (!s.expires || Date.now() > s.expires) {
       localStorage.removeItem('juic_session');
       window.location.href = 'login.html';
+      return;
     }
+    session = s;
   } catch(e) {
     localStorage.removeItem('juic_session');
     window.location.href = 'login.html';
@@ -439,12 +439,26 @@ function doLogout() {
   window.location.href = 'login.html';
 }
 
+/* ── portal_status (Kintone value) → UI state ── */
+var STATUS_MAP = {
+  '未承認': 'review',
+  '承認': 'approved',
+  'ポータル非表示': 'hidden'
+};
+
+function getInitials(name) {
+  if (!name) return '--';
+  var parts = name.trim().split(/\s+/);
+  var initials = parts.slice(0, 2).map(function(p) { return p.charAt(0).toUpperCase(); }).join('');
+  return initials || '--';
+}
+
 /* ── i18n ── */
 var isJa = false;
 
 var T = {
   en: {
-    studentId: 'International Research Student · 2025 Spring',
+    signedInAs: 'Signed in as ',
     statusReview: 'Internal Review', statusApproved: 'Approved', statusHidden: 'Unavailable',
     noticeReview: 'Your application is currently under review by the faculty committee. The sections below will become accessible once approved.',
     noticeHidden: 'This portal is currently unavailable. Please contact JUIC for assistance.',
@@ -453,12 +467,12 @@ var T = {
     titleDorm: 'Dormitory Application',     descDorm: 'Application procedure and deadlines',
     titleLiving: 'Life in Japan',           descLiving: 'Ward office, health insurance, JP Bank — pre/post arrival',
     titleAdm: 'On-campus Procedures',       descAdm: 'Tuition, Educational Affairs, check-in schedule',
+    titleNotif: 'Notify University of Arrival', descNotif: 'Arrival date and first-day adjustment status',
     labelContact: 'Contact', msgTitle: 'Send a question to JUIC',
-    msgPH: 'Type your question here…', send: 'Send', logout: 'Sign out',
-    demoLabel: 'Demo: portal status'
+    msgPH: 'Type your question here…', send: 'Send', logout: 'Sign out'
   },
   ja: {
-    studentId: '外国人研究生 · 2025年春学期',
+    signedInAs: 'ログイン中: ',
     statusReview: '審査中', statusApproved: '承認済み', statusHidden: 'アクセス不可',
     noticeReview: '現在、教授会にて審査中です。承認が完了次第、以下の各セクションにアクセスできるようになります。',
     noticeHidden: '現在このポータルはご利用いただけません。JUICまでお問い合わせください。',
@@ -467,15 +481,15 @@ var T = {
     titleDorm: '入寮申請',           descDorm: '申請手順と締め切りについて',
     titleLiving: '日本での生活案内', descLiving: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
     titleAdm: '学内手続き',          descAdm: '学費納入・教務課・在籍確認',
+    titleNotif: '来日予定日・初日調整の連絡', descNotif: '来日予定日と初日調整状況について',
     labelContact: 'お問い合わせ', msgTitle: 'JUICへの質問',
-    msgPH: 'ご質問をこちらに入力してください…', send: '送信', logout: 'ログアウト',
-    demoLabel: 'デモ: ステータス切替'
+    msgPH: 'ご質問をこちらに入力してください…', send: '送信', logout: 'ログアウト'
   }
 };
 
 function applyLang(lang) {
   var t = T[lang];
-  document.getElementById('student-id').textContent          = t.studentId;
+  document.getElementById('student-id').textContent          = t.signedInAs + (session ? session.email : '');
   document.getElementById('status-text').textContent         = t.statusReview;
   document.getElementById('status-text-approved').textContent= t.statusApproved;
   document.getElementById('status-text-hidden').textContent  = t.statusHidden;
@@ -490,6 +504,8 @@ function applyLang(lang) {
   document.getElementById('desc-living').textContent         = t.descLiving;
   document.getElementById('title-admission').textContent     = t.titleAdm;
   document.getElementById('desc-admission').textContent      = t.descAdm;
+  document.getElementById('title-notifications').textContent = t.titleNotif;
+  document.getElementById('desc-notifications').textContent  = t.descNotif;
   document.getElementById('label-contact').textContent       = t.labelContact;
   document.getElementById('msg-title-text').textContent      = t.msgTitle;
   document.getElementById('msg-area').placeholder            = t.msgPH;
@@ -498,8 +514,9 @@ function applyLang(lang) {
 }
 
 function applyStatus() {
-  var status = document.getElementById('status-select').value;
-  var ids = ['speedvisa','dorm','living','admission'];
+  if (!session) return;
+  var status = STATUS_MAP[session.portal_status] || 'review';
+  var ids = ['speedvisa','dorm','living','admission','notifications'];
 
   document.getElementById('badge-review').style.display    = status === 'review'   ? 'inline-flex' : 'none';
   document.getElementById('badge-approved').style.display  = status === 'approved' ? 'inline-flex' : 'none';
@@ -529,6 +546,11 @@ function setLang(lang) {
   applyLang(lang);
 }
 
+if (session) {
+  document.getElementById('student-name').textContent = session.student_name || '—';
+  document.getElementById('avatar-initials').textContent = getInitials(session.student_name);
+}
+applyLang('en');
 applyStatus();
 </script>
 </body>
