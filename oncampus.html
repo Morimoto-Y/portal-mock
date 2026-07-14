@@ -141,6 +141,31 @@
     margin-bottom: 12px;
   }
 
+  .note-box {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  .link-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px; border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md); background: var(--surface2);
+    color: var(--text-primary); text-decoration: none;
+    font-size: 14px;
+  }
+
+  .link-btn:hover { background: var(--surface); border-color: var(--purple-text); }
+  .link-btn .link-icon { font-size: 18px; color: var(--purple-text); flex-shrink: 0; }
+  .link-btn .link-label { flex: 1; }
+  .link-btn .link-arrow { color: var(--text-tertiary); font-size: 15px; flex-shrink: 0; }
+
   .warning-box {
     background: var(--danger-bg);
     border: 0.5px solid var(--danger-border);
@@ -221,6 +246,17 @@
   <p class="page-title" id="page-title">On-Campus Procedures</p>
   <p class="page-sub" id="page-sub">Tuition, Educational Affairs, check-in schedule.</p>
 
+  <!-- Residence card upload -->
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-id-badge-2" aria-hidden="true"></i><span id="title-residencecard">Residence Card Upload (Status: Student only)</span></p>
+    <p class="note-box" id="residencecard-text"></p>
+    <a class="link-btn" href="https://s-visa.com/signin" target="_blank" rel="noopener">
+      <i class="ti ti-login link-icon" aria-hidden="true"></i>
+      <span class="link-label" id="label-speedvisa-login">SpeedVisa Login</span>
+      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
+    </a>
+  </div>
+
   <div class="field-card">
     <p class="field-title"><i class="ti ti-id-badge-2" aria-hidden="true"></i><span id="title-checkin">Monthly attendance check-in</span></p>
 
@@ -289,7 +325,10 @@ var T = {
       'You may check in on any day the university is open.',
       'If your attendance cannot be confirmed, you may be reported to the Immigration Services Agency as a person whose whereabouts are unknown.',
       'Failing to check in may result in the revocation of your residence status.'
-    ]
+    ],
+    titleResidenceCard: 'Residence Card Upload (Status: Student only)',
+    residenceCardText: 'After registering your address at your local \nmunicipal office, you are required to upload \nyour residence card to SpeedVisa.\nPlease log in to SpeedVisa and upload your \nresidence card with your registered address.',
+    labelSpeedvisaLogin: 'SpeedVisa Login'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
@@ -308,7 +347,10 @@ var T = {
       '大学が開いている日であればいつでもチェックイン可能です。',
       '在籍が確認できない場合、所在不明者として入国管理局へ報告する可能性があります。',
       '在籍確認を怠ると在留資格が取り消されることがあります。'
-    ]
+    ],
+    titleResidenceCard: '在留カードのアップロード（在留資格「留学」の方のみ）',
+    residenceCardText: '区役所・市役所で住所登録を行った後、\n住所が記載された在留カードをSpeedVisaへ\nアップロードしてください。\nSpeedVisaにログインし、在留カードをアップロードしてください。',
+    labelSpeedvisaLogin: 'SpeedVisaログイン'
   }
 };
 
@@ -333,6 +375,9 @@ function applyLang(lang) {
   document.getElementById('method-heading').textContent = t.methodHeading;
   renderList(document.getElementById('method-list'), t.methodList);
   renderList(document.getElementById('note-list'), t.noteList);
+  document.getElementById('title-residencecard').textContent = t.titleResidenceCard;
+  document.getElementById('residencecard-text').textContent  = t.residenceCardText;
+  document.getElementById('label-speedvisa-login').textContent = t.labelSpeedvisaLogin;
 }
 
 function setLang(lang) {

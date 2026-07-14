@@ -201,19 +201,6 @@
     white-space: pre-line;
   }
 
-  .link-btn {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px; border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md); background: var(--surface2);
-    color: var(--text-primary); text-decoration: none;
-    font-size: 14px;
-  }
-
-  .link-btn:hover { background: var(--surface); border-color: var(--blue-text); }
-  .link-btn .link-icon { font-size: 18px; color: var(--blue-text); flex-shrink: 0; }
-  .link-btn .link-label { flex: 1; }
-  .link-btn .link-arrow { color: var(--text-tertiary); font-size: 15px; flex-shrink: 0; }
-
   .mono-inline {
     font-family: monospace;
     font-size: 12px;
@@ -288,17 +275,6 @@
     <div class="save-status" id="firstday-save-status"><i class="ti ti-check" aria-hidden="true"></i><span id="firstday-save-text"></span></div>
   </div>
 
-  <!-- Residence card upload -->
-  <div class="field-card">
-    <p class="field-title"><i class="ti ti-id-badge-2" aria-hidden="true"></i><span id="title-residencecard">Residence Card Upload (Status: Student only)</span></p>
-    <p class="note-box" id="residencecard-text"></p>
-    <a class="link-btn" href="https://s-visa.com/signin" target="_blank" rel="noopener">
-      <i class="ti ti-login link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-speedvisa-login">SpeedVisa Login</span>
-      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
-    </a>
-  </div>
-
   <p class="footer-note">Juntendo University International Center (JUIC)</p>
 
 </div>
@@ -352,10 +328,7 @@ var T = {
     titleFirstday: 'First-day adjustment status', descFirstday: 'Status of coordinating your first day at the university.',
     labNote: 'Please coordinate with your laboratory contact ({{LAB_EMAIL}}) regarding your first-day schedule, including the time and location where you should report.',
     statusNotYet: 'Not yet', statusInProgress: 'In progress', statusConfirmed: 'Confirmed',
-    saved: 'Saved', saveError: 'Could not save. Please try again.',
-    titleResidenceCard: 'Residence Card Upload (Status: Student only)',
-    residenceCardText: 'After registering your address at your local \nmunicipal office, you are required to upload \nyour residence card to SpeedVisa.\nPlease log in to SpeedVisa and upload your \nresidence card with your registered address.',
-    labelSpeedvisaLogin: 'SpeedVisa Login'
+    saved: 'Saved', saveError: 'Could not save. Please try again.'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
@@ -365,10 +338,7 @@ var T = {
     titleFirstday: '初日調整状況', descFirstday: '大学での初日の調整状況について。',
     labNote: '初日にどこに何時に行けばよいか、受入講座の担当者（{{LAB_EMAIL}}）と事前にご調整ください。',
     statusNotYet: 'まだ', statusInProgress: '調整中', statusConfirmed: '調整済み',
-    saved: '保存しました', saveError: '保存できませんでした。再度お試しください。',
-    titleResidenceCard: '在留カードのアップロード（在留資格「留学」の方のみ）',
-    residenceCardText: '区役所・市役所で住所登録を行った後、\n住所が記載された在留カードをSpeedVisaへ\nアップロードしてください。\nSpeedVisaにログインし、在留カードをアップロードしてください。',
-    labelSpeedvisaLogin: 'SpeedVisaログイン'
+    saved: '保存しました', saveError: '保存できませんでした。再度お試しください。'
   }
 };
 
@@ -394,9 +364,6 @@ function applyLang(lang) {
   var labEmail = (session && session.lab_email) ? session.lab_email : '—';
   document.getElementById('lab-contact-note').innerHTML =
     t.labNote.replace('{{LAB_EMAIL}}', '<span class="mono-inline">' + escapeHtml(labEmail) + '</span>');
-  document.getElementById('title-residencecard').textContent = t.titleResidenceCard;
-  document.getElementById('residencecard-text').textContent  = t.residenceCardText;
-  document.getElementById('label-speedvisa-login').textContent = t.labelSpeedvisaLogin;
 }
 
 function setLang(lang) {
