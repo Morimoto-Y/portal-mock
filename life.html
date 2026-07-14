@@ -186,22 +186,13 @@
   <p class="page-sub" id="page-sub">Ward office, health insurance, JP Bank — pre/post arrival.</p>
 
   <div class="field-card">
-    <p class="field-title"><i class="ti ti-file-type-pdf" aria-hidden="true"></i><span id="title-docs">Guides</span></p>
-    <a class="link-btn" href="#" target="_blank" rel="noopener">
-      <i class="ti ti-file-type-pdf link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-handbook">Life in Japan Handbook</span>
+    <p class="field-title"><i class="ti ti-world" aria-hidden="true"></i><span id="title-docs">Guides</span></p>
+    <a class="link-btn" href="https://en.juntendo.ac.jp/international-student-life/" target="_blank" rel="noopener">
+      <i class="ti ti-world link-icon" aria-hidden="true"></i>
+      <span class="link-label" id="label-life">International Student Life</span>
       <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
     </a>
-    <a class="link-btn" href="#" target="_blank" rel="noopener">
-      <i class="ti ti-file-type-pdf link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-checklist">Pre-Departure from Japan Checklist</span>
-      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
-    </a>
-    <a class="link-btn" href="#" target="_blank" rel="noopener">
-      <i class="ti ti-file-type-pdf link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-mentalhealth">Mental Health Care</span>
-      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
-    </a>
+    <p class="note-box" id="life-note" style="margin-top:8px;"></p>
   </div>
 
   <div class="field-card">
@@ -249,9 +240,8 @@ var T = {
     pageTitle: 'Life in Japan',
     pageSub: 'Ward office, health insurance, JP Bank — pre/post arrival.',
     titleDocs: 'Guides',
-    labelHandbook: 'Life in Japan Handbook',
-    labelChecklist: 'Pre-Departure from Japan Checklist',
-    labelMentalHealth: 'Mental Health Care',
+    labelLife: 'International Student Life',
+    lifeNote: 'This page provides comprehensive information to support your life in Japan as an international student or researcher at Juntendo University. Topics include arrival and departure procedures, visas and residence status, daily life essentials (banking, health insurance, transportation, utilities), and campus resources such as Japanese language classes, housing, libraries, and well-being support.',
     titleJapanese: 'Japanese language courses',
     japaneseNote: 'Japanese language courses are offered twice a year (spring and fall). If you are interested, please contact JUIC.'
   },
@@ -260,9 +250,8 @@ var T = {
     pageTitle: '日本での生活案内',
     pageSub: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き。',
     titleDocs: '資料',
-    labelHandbook: 'Life in Japan Handbook',
-    labelChecklist: '帰国前チェックリスト',
-    labelMentalHealth: 'メンタルヘルスケア',
+    labelLife: 'International Student Life',
+    lifeNote: '順天堂大学で学ぶ留学生・研究者のための生活情報をまとめたページです。来日前後の手続き、ビザ・在留資格、銀行口座・健康保険・交通など日常生活に必要な情報のほか、日本語コース・住居・図書館・メンタルヘルスサポートなどのキャンパスサービスについても確認できます。',
     titleJapanese: '日本語コース',
     japaneseNote: '日本語コースは春と秋の年2回開講されます。ご興味のある方はJUICまでご連絡ください。'
   }
@@ -275,9 +264,8 @@ function applyLang(lang) {
   document.getElementById('page-title').textContent   = t.pageTitle;
   document.getElementById('page-sub').textContent     = t.pageSub;
   document.getElementById('title-docs').textContent   = t.titleDocs;
-  document.getElementById('label-handbook').textContent = t.labelHandbook;
-  document.getElementById('label-checklist').textContent = t.labelChecklist;
-  document.getElementById('label-mentalhealth').textContent = t.labelMentalHealth;
+  document.getElementById('label-life').textContent   = t.labelLife;
+  document.getElementById('life-note').textContent    = t.lifeNote;
   document.getElementById('title-japanese').textContent = t.titleJapanese;
   document.getElementById('japanese-note').textContent  = t.japaneseNote;
 }
