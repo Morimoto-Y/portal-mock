@@ -143,36 +143,6 @@
     white-space: pre-line;
   }
 
-  .readonly-row { display: flex; align-items: center; gap: 8px; }
-
-  .readonly-field {
-    flex: 1;
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: monospace;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface2);
-    color: var(--text-secondary);
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .copy-btn {
-    font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 9px 12px;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex; align-items: center; gap: 5px;
-    flex-shrink: 0;
-  }
-
-  .copy-btn:hover { background: var(--surface2); }
-
   .link-btn {
     display: flex; align-items: center; gap: 10px;
     padding: 12px; border: 0.5px solid var(--border-md);
@@ -217,18 +187,6 @@
 
   <p class="page-title" id="page-title">CoE Application · SpeedVisa</p>
   <p class="page-sub" id="page-sub">Manage your Certificate of Eligibility and residence-related documents through the SpeedVisa system.</p>
-
-  <!-- SpeedVisa Login ID -->
-  <div class="field-card">
-    <p class="field-title"><i class="ti ti-key" aria-hidden="true"></i><span id="title-id">SpeedVisa Login ID</span></p>
-    <p class="field-desc" id="desc-id">Use this ID to sign in to the SpeedVisa system.</p>
-    <div class="readonly-row">
-      <div class="readonly-field" id="speedvisa-id-value">—</div>
-      <button class="copy-btn" onclick="copySpeedvisaId()">
-        <i class="ti ti-copy" aria-hidden="true"></i><span id="copy-label">Copy</span>
-      </button>
-    </div>
-  </div>
 
   <!-- Guidance -->
   <div class="field-card">
@@ -292,21 +250,17 @@ var T = {
     logout: 'Sign out', back: 'Back to portal',
     pageTitle: 'CoE Application · SpeedVisa',
     pageSub: 'Manage your Certificate of Eligibility and residence-related documents through the SpeedVisa system.',
-    titleId: 'SpeedVisa Login ID', descId: 'Use this ID to sign in to the SpeedVisa system.',
     titleGuidance: 'Getting started',
     guidance: 'Initial login: Please create an account using the invitation link provided by JUIC via email.\n\nIf you have renewed your residence permit (Status: Student) or changed your address, please re-upload your residence card.',
-    titleLinks: 'Links', labelHelp: 'SpeedVisa Help Center', labelLogin: 'SpeedVisa Login',
-    copy: 'Copy', copied: 'Copied'
+    titleLinks: 'Links', labelHelp: 'SpeedVisa Help Center', labelLogin: 'SpeedVisa Login'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
     pageTitle: 'CoE申請 · SpeedVisa',
     pageSub: 'SpeedVisaシステムを通じて、在留資格認定証明書および在留関連書類を管理します。',
-    titleId: 'SpeedVisaログインID', descId: 'SpeedVisaシステムへのログインにこのIDを使用してください。',
     titleGuidance: 'はじめに',
     guidance: '初回ログイン：JUICよりメールでお送りしたリンクからアカウントを作成してください。\n\n在留資格「留学」の期間を更新した方、または住所を変更した方は、在留カードを再アップロードしてください。',
-    titleLinks: 'リンク', labelHelp: 'SpeedVisaヘルプセンター', labelLogin: 'SpeedVisaログイン',
-    copy: 'コピー', copied: 'コピーしました'
+    titleLinks: 'リンク', labelHelp: 'SpeedVisaヘルプセンター', labelLogin: 'SpeedVisaログイン'
   }
 };
 
@@ -316,14 +270,11 @@ function applyLang(lang) {
   document.getElementById('back-label').textContent   = t.back;
   document.getElementById('page-title').textContent   = t.pageTitle;
   document.getElementById('page-sub').textContent     = t.pageSub;
-  document.getElementById('title-id').textContent     = t.titleId;
-  document.getElementById('desc-id').textContent      = t.descId;
   document.getElementById('title-guidance').textContent = t.titleGuidance;
   document.getElementById('guidance-text').textContent  = t.guidance;
   document.getElementById('title-links').textContent  = t.titleLinks;
   document.getElementById('label-help').textContent   = t.labelHelp;
   document.getElementById('label-login').textContent  = t.labelLogin;
-  document.getElementById('copy-label').textContent   = t.copy;
 }
 
 function setLang(lang) {
@@ -334,21 +285,6 @@ function setLang(lang) {
   applyLang(lang);
 }
 
-function copySpeedvisaId() {
-  var t = isJa ? T.ja : T.en;
-  var value = (session && session.speedvisa_id) || '';
-  if (!value) return;
-  navigator.clipboard.writeText(value).then(function() {
-    var label = document.getElementById('copy-label');
-    var original = t.copy;
-    label.textContent = t.copied;
-    setTimeout(function() { label.textContent = original; }, 1500);
-  });
-}
-
-if (session) {
-  document.getElementById('speedvisa-id-value').textContent = session.speedvisa_id || '—';
-}
 applyLang('en');
 </script>
 </body>

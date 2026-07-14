@@ -130,6 +130,18 @@
     display: flex; align-items: center; gap: 7px;
   }
 
+  .note-box {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
   .link-btn {
     display: flex; align-items: center; gap: 10px;
     padding: 12px; border: 0.5px solid var(--border-md);
@@ -172,20 +184,15 @@
     <span id="back-label">Back to portal</span>
   </a>
 
-  <p class="page-title" id="page-title">Dormitory Application</p>
-  <p class="page-sub" id="page-sub">Application procedure and deadlines.</p>
+  <p class="page-title" id="page-title">Dormitory</p>
+  <p class="page-sub" id="page-sub">Information about the international student dormitory.</p>
 
   <div class="field-card">
-    <p class="field-title"><i class="ti ti-building" aria-hidden="true"></i><span id="title-links">Links</span></p>
-    <a class="link-btn" href="#" target="_blank" rel="noopener">
-      <i class="ti ti-file-text link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-application">Application link</span>
-      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
-    </a>
-    <a class="link-btn" href="#" target="_blank" rel="noopener">
-      <i class="ti ti-door-exit link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-movingout">Moving Out Notice</span>
-      <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
+    <p class="field-title"><i class="ti ti-building" aria-hidden="true"></i><span id="title-info">Dormitory availability</span></p>
+    <p class="note-box" id="info-text"></p>
+    <a class="link-btn" href="mailto:juic@juntendo.ac.jp">
+      <i class="ti ti-mail link-icon" aria-hidden="true"></i>
+      <span class="link-label" id="label-contact">Contact: juic@juntendo.ac.jp</span>
     </a>
   </div>
 
@@ -226,15 +233,19 @@ function doLogout() {
 var T = {
   en: {
     logout: 'Sign out', back: 'Back to portal',
-    pageTitle: 'Dormitory Application',
-    pageSub: 'Application procedure and deadlines.',
-    titleLinks: 'Links', labelApplication: 'Application link', labelMovingOut: 'Moving Out Notice'
+    pageTitle: 'Dormitory',
+    pageSub: 'Information about the international student dormitory.',
+    titleInfo: 'Dormitory availability',
+    info: 'Juntendo University has a dormitory for \ninternational students. However, it has been \nat full capacity in recent years.\nIf you are interested in living in the dormitory,\nplease contact JUIC to check availability.',
+    labelContact: 'Contact: juic@juntendo.ac.jp'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
-    pageTitle: '入寮申請',
-    pageSub: '申請手順と締め切りについて。',
-    titleLinks: 'リンク', labelApplication: '入寮申請リンク', labelMovingOut: '退寮届'
+    pageTitle: 'ドミトリー',
+    pageSub: '留学生用ドミトリーについて。',
+    titleInfo: '入寮状況について',
+    info: '順天堂大学には留学生用のドミトリーがあります。\nしかし近年は満室の状態が続いています。\n入寮をご希望の方は、空室状況確認のため\nJUICまでお問い合わせください。',
+    labelContact: '連絡先：juic@juntendo.ac.jp'
   }
 };
 
@@ -244,9 +255,9 @@ function applyLang(lang) {
   document.getElementById('back-label').textContent   = t.back;
   document.getElementById('page-title').textContent   = t.pageTitle;
   document.getElementById('page-sub').textContent     = t.pageSub;
-  document.getElementById('title-links').textContent  = t.titleLinks;
-  document.getElementById('label-application').textContent = t.labelApplication;
-  document.getElementById('label-movingout').textContent   = t.labelMovingOut;
+  document.getElementById('title-info').textContent   = t.titleInfo;
+  document.getElementById('info-text').textContent    = t.info;
+  document.getElementById('label-contact').textContent = t.labelContact;
 }
 
 function setLang(lang) {
