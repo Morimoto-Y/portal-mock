@@ -274,28 +274,15 @@
     display: flex; align-items: center; gap: 7px;
   }
 
-  textarea {
-    width: 100%; height: 76px; resize: none;
-    font-size: 13px; font-family: 'DM Sans', sans-serif;
-    padding: 8px 10px;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    background: var(--surface2); color: var(--text-primary);
+  .contact-line {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 8px;
   }
 
-  textarea:focus { outline: none; border-color: #378ADD; }
-
-  .msg-footer { display: flex; justify-content: flex-end; margin-top: 8px; }
-
-  .send-btn {
-    font-size: 13px; font-family: 'DM Sans', sans-serif;
-    padding: 6px 14px; border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md); background: transparent;
-    color: var(--text-primary); cursor: pointer;
-    display: flex; align-items: center; gap: 5px;
-  }
-
-  .send-btn:hover { background: var(--surface2); }
+  .contact-line i { font-size: 15px; color: var(--text-tertiary); flex-shrink: 0; }
+  .contact-line a { color: var(--text-primary); text-decoration: none; }
+  .contact-line a:hover { text-decoration: underline; }
 
   .footer-note { font-size: 11px; color: var(--text-tertiary); text-align: center; margin-top: 2rem; }
 </style>
@@ -399,15 +386,19 @@
   <div class="msg-card">
     <p class="msg-title">
       <i class="ti ti-message" aria-hidden="true" style="font-size:16px"></i>
-      <span id="msg-title-text">Send a question to JUIC</span>
+      <span id="msg-title-text">JUIC Contact Information</span>
     </p>
-    <textarea id="msg-area" placeholder="Type your question here…"></textarea>
-    <div class="msg-footer">
-      <button class="send-btn">
-        <i class="ti ti-send" aria-hidden="true"></i>
-        <span id="send-label">Send</span>
-      </button>
-    </div>
+    <p class="card-desc" id="contact-org">Juntendo University International Center (JUIC)</p>
+    <p class="contact-line">
+      <i class="ti ti-mail" aria-hidden="true"></i>
+      <span id="contact-email-label">Email:</span>
+      <a href="mailto:juic@juntendo.ac.jp">juic@juntendo.ac.jp</a>
+    </p>
+    <p class="contact-line">
+      <i class="ti ti-map-pin" aria-hidden="true"></i>
+      <span id="contact-location-label">Location:</span>
+      <span id="contact-location">Century Tower 5F North</span>
+    </p>
   </div>
 
   <p class="footer-note">Juntendo University International Center (JUIC)</p>
@@ -487,8 +478,10 @@ var T = {
     titleLiving: 'Life in Japan',           descLiving: 'Ward office, health insurance, JP Bank — pre/post arrival',
     titleAdm: 'On-campus Procedures',       descAdm: 'Tuition, Educational Affairs, check-in schedule',
     titleNotif: 'Notify University of Arrival', descNotif: 'Arrival date and first-day adjustment status',
-    labelContact: 'Contact', msgTitle: 'Send a question to JUIC',
-    msgPH: 'Type your question here…', send: 'Send', logout: 'Sign out'
+    labelContact: 'Contact', msgTitle: 'JUIC Contact Information',
+    contactOrg: 'Juntendo University International Center (JUIC)',
+    contactEmailLabel: 'Email:', contactLocationLabel: 'Location:',
+    contactLocation: 'Century Tower 5F North', logout: 'Sign out'
   },
   ja: {
     signedInAs: 'ログイン中: ',
@@ -501,8 +494,10 @@ var T = {
     titleLiving: '日本での生活案内', descLiving: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
     titleAdm: '学内手続き',          descAdm: '学費納入・教務課・在籍確認',
     titleNotif: '来日予定日・初日調整の連絡', descNotif: '来日予定日と初日調整状況について',
-    labelContact: 'お問い合わせ', msgTitle: 'JUICへの質問',
-    msgPH: 'ご質問をこちらに入力してください…', send: '送信', logout: 'ログアウト'
+    labelContact: 'お問い合わせ', msgTitle: 'JUIC連絡先',
+    contactOrg: '順天堂大学 国際交流センター（JUIC）',
+    contactEmailLabel: 'メール:', contactLocationLabel: '場所:',
+    contactLocation: 'センチュリータワー北5階', logout: 'ログアウト'
   }
 };
 
@@ -527,8 +522,10 @@ function applyLang(lang) {
   document.getElementById('desc-notifications').textContent  = t.descNotif;
   document.getElementById('label-contact').textContent       = t.labelContact;
   document.getElementById('msg-title-text').textContent      = t.msgTitle;
-  document.getElementById('msg-area').placeholder            = t.msgPH;
-  document.getElementById('send-label').textContent          = t.send;
+  document.getElementById('contact-org').textContent         = t.contactOrg;
+  document.getElementById('contact-email-label').textContent = t.contactEmailLabel;
+  document.getElementById('contact-location-label').textContent = t.contactLocationLabel;
+  document.getElementById('contact-location').textContent    = t.contactLocation;
   document.getElementById('logout-label').textContent        = t.logout;
 }
 
