@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Juntendo University — Life in Japan</title>
+<title>Juntendo University — Immunization Requirements</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -22,8 +22,8 @@
     --text-tertiary: #a09f9a;
     --radius-md: 8px;
     --radius-lg: 14px;
-    --amber-bg: #FAEEDA;
-    --amber-text: #854F0B;
+    --red-bg: #FDECEA;
+    --red-text: #A32D2D;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -36,8 +36,8 @@
       --text-primary: #f0ede8;
       --text-secondary: #9e9b95;
       --text-tertiary: #65635e;
-      --amber-bg: #3d2200;
-      --amber-text: #FAC775;
+      --red-bg: #3a1616;
+      --red-text: #F09595;
     }
   }
 
@@ -130,16 +130,15 @@
     display: flex; align-items: center; gap: 7px;
   }
 
-  .note-box {
-    background: var(--surface2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    white-space: pre-line;
+  .field-title i { color: var(--red-text); font-size: 17px; }
+
+  .body-text {
+    font-size: 13px; color: var(--text-primary); line-height: 1.7;
+    margin-bottom: 12px; white-space: pre-line;
   }
+
+  .body-text a { color: var(--red-text); text-decoration: none; }
+  .body-text a:hover { text-decoration: underline; }
 
   .link-btn {
     display: flex; align-items: center; gap: 10px;
@@ -150,8 +149,8 @@
   }
 
   .link-btn:last-child { margin-bottom: 0; }
-  .link-btn:hover { background: var(--surface); border-color: var(--amber-text); }
-  .link-btn .link-icon { font-size: 18px; color: var(--amber-text); flex-shrink: 0; }
+  .link-btn:hover { background: var(--surface); border-color: var(--red-text); }
+  .link-btn .link-icon { font-size: 18px; color: var(--red-text); flex-shrink: 0; }
   .link-btn .link-label { flex: 1; }
   .link-btn .link-arrow { color: var(--text-tertiary); font-size: 15px; flex-shrink: 0; }
 
@@ -183,35 +182,24 @@
     <span id="back-label">Back to portal</span>
   </a>
 
-  <p class="page-title" id="page-title">Life in Japan</p>
-  <p class="page-sub" id="page-sub">Ward office, health insurance, JP Bank — pre/post arrival.</p>
+  <p class="page-title" id="page-title">Immunization Requirements</p>
+  <p class="page-sub" id="page-sub">Required for access to Juntendo Hospital.</p>
 
   <div class="field-card">
-    <p class="field-title"><i class="ti ti-world" aria-hidden="true"></i><span id="title-docs">Guides</span></p>
-    <a class="link-btn" href="https://en.juntendo.ac.jp/international-student-life/" target="_blank" rel="noopener">
-      <i class="ti ti-world link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-life">International Student Life</span>
+    <p class="field-title"><i class="ti ti-vaccine" aria-hidden="true"></i><span id="title-notice">Immunization Requirements</span></p>
+    <p class="body-text" id="notice-text"></p>
+  </div>
+
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-link" aria-hidden="true"></i><span id="title-links">Resources</span></p>
+    <a class="link-btn" href="https://en.juntendo.ac.jp/academics/clinical-observership/immunization-requirements.html" target="_blank" rel="noopener">
+      <i class="ti ti-vaccine link-icon" aria-hidden="true"></i>
+      <span class="link-label" id="label-requirements-link">Immunization Requirements</span>
       <i class="ti ti-external-link link-arrow" aria-hidden="true"></i>
     </a>
-    <p class="note-box" id="life-note" style="margin-top:8px;"></p>
-  </div>
-
-  <div class="field-card">
-    <p class="field-title"><i class="ti ti-language" aria-hidden="true"></i><span id="title-japanese">Japanese language courses</span></p>
-    <p class="note-box" id="japanese-note"></p>
-  </div>
-
-  <div class="field-card">
-    <p class="field-title"><i class="ti ti-file-text" aria-hidden="true"></i><span id="title-packet">Arrival Packet</span></p>
-    <p class="body-text" id="packet-note" style="font-size:13px; color:var(--text-primary); line-height:1.7; margin-bottom:12px; white-space:pre-line;"></p>
-    <a class="link-btn" href="./pdf/JUIC_InformationPacket_EN_20260401.pdf" target="_blank" rel="noopener">
+    <a class="link-btn" href="./pdf/Immunization_Requirements_20260527.pdf" target="_blank" rel="noopener">
       <i class="ti ti-file-download link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-packet-en">English version (PDF)</span>
-      <i class="ti ti-download link-arrow" aria-hidden="true"></i>
-    </a>
-    <a class="link-btn" href="./pdf/JUIC_InformationPacket_JP_20260401.pdf" target="_blank" rel="noopener">
-      <i class="ti ti-file-download link-icon" aria-hidden="true"></i>
-      <span class="link-label" id="label-packet-ja">日本語版（PDF）</span>
+      <span class="link-label" id="label-form-link">Immunization Requirement Form (PDF)</span>
       <i class="ti ti-download link-arrow" aria-hidden="true"></i>
     </a>
   </div>
@@ -233,7 +221,7 @@ var session = null;
       window.location.href = 'login.html';
       return;
     }
-    if (s.portal_status !== '承認' || s.show_life === false) {
+    if (s.portal_status !== '承認' || s.show_immunization === false) {
       window.location.href = 'index.html';
       return;
     }
@@ -253,31 +241,23 @@ function doLogout() {
 var T = {
   en: {
     logout: 'Sign out', back: 'Back to portal',
-    pageTitle: 'Life in Japan',
-    pageSub: 'Ward office, health insurance, JP Bank — pre/post arrival.',
-    titleDocs: 'Guides',
-    labelLife: 'International Student Life',
-    lifeNote: 'This page provides comprehensive information to support your life in Japan as an international student or researcher at Juntendo University. Topics include arrival and departure procedures, visas and residence status, daily life essentials (banking, health insurance, transportation, utilities), and campus resources such as Japanese language classes, housing, libraries, and well-being support.',
-    titleJapanese: 'Japanese language courses',
-    japaneseNote: 'Japanese language courses are offered twice a year (spring and fall):\n- Free of charge\n- No academic credit\n- Hybrid format (on-campus and online)\n- 25 sessions per course\nIf you are interested, please contact JUIC.',
-    titlePacket: 'Arrival Packet',
-    packetNote: 'Comprehensive guide for your arrival in Japan.\nAvailable in English and Japanese.',
-    labelPacketEn: 'English version (PDF)',
-    labelPacketJa: 'Japanese version (PDF)'
+    pageTitle: 'Immunization Requirements',
+    pageSub: 'Required for access to Juntendo Hospital.',
+    titleNotice: 'Immunization Requirements',
+    noticeHtml: "If you plan to enter Juntendo University Hospital\nduring your research period, you must fulfill all\nImmunization Requirements in advance.\nPlease submit the completed form to:\n<a href=\"mailto:juic@juntendo.ac.jp\">juic@juntendo.ac.jp</a>",
+    titleLinks: 'Resources',
+    labelRequirementsLink: 'Immunization Requirements',
+    labelFormLink: 'Immunization Requirement Form (PDF)'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
-    pageTitle: '日本での生活案内',
-    pageSub: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き。',
-    titleDocs: 'ガイド',
-    labelLife: 'International Student Life',
-    lifeNote: '順天堂大学で学ぶ留学生・研究者のための生活情報をまとめたページです。来日前後の手続き、ビザ・在留資格、銀行口座・健康保険・交通など日常生活に必要な情報のほか、日本語コース・住居・図書館・メンタルヘルスサポートなどのキャンパスサービスについても確認できます。',
-    titleJapanese: '日本語コース',
-    japaneseNote: '日本語コースは春と秋の年2回開講されます。\n・受講料無料\n・単位認定なし\n・対面とオンラインのハイブリッド形式\n・1コース25回\nご興味のある方はJUICまでご連絡ください。',
-    titlePacket: 'アライバルパケット',
-    packetNote: '来日に向けた総合ガイドです。\n英語版と日本語版をご用意しています。',
-    labelPacketEn: '英語版（PDF）',
-    labelPacketJa: '日本語版（PDF）'
+    pageTitle: 'Immunization Requirements',
+    pageSub: '順天堂医院への立ち入りに必要な予防接種要件',
+    titleNotice: '予防接種要件について',
+    noticeHtml: "研究期間中に順天堂医院内へ立ち入る場合は、\n事前にすべての予防接種要件を満たす必要があります。\n記入済みのフォームを以下のメールアドレスへ\nお送りください：<a href=\"mailto:juic@juntendo.ac.jp\">juic@juntendo.ac.jp</a>",
+    titleLinks: '関連リンク',
+    labelRequirementsLink: 'Immunization Requirements（詳細）',
+    labelFormLink: 'Immunization Requirement Form（PDF）'
   }
 };
 
@@ -287,15 +267,11 @@ function applyLang(lang) {
   document.getElementById('back-label').textContent   = t.back;
   document.getElementById('page-title').textContent   = t.pageTitle;
   document.getElementById('page-sub').textContent     = t.pageSub;
-  document.getElementById('title-docs').textContent   = t.titleDocs;
-  document.getElementById('label-life').textContent   = t.labelLife;
-  document.getElementById('life-note').textContent    = t.lifeNote;
-  document.getElementById('title-japanese').textContent = t.titleJapanese;
-  document.getElementById('japanese-note').textContent  = t.japaneseNote;
-  document.getElementById('title-packet').textContent   = t.titlePacket;
-  document.getElementById('packet-note').textContent    = t.packetNote;
-  document.getElementById('label-packet-en').textContent = t.labelPacketEn;
-  document.getElementById('label-packet-ja').textContent = t.labelPacketJa;
+  document.getElementById('title-notice').textContent = t.titleNotice;
+  document.getElementById('notice-text').innerHTML    = t.noticeHtml;
+  document.getElementById('title-links').textContent  = t.titleLinks;
+  document.getElementById('label-requirements-link').textContent = t.labelRequirementsLink;
+  document.getElementById('label-form-link').textContent = t.labelFormLink;
 }
 
 function setLang(lang) {

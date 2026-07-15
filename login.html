@@ -393,6 +393,8 @@ async function doLogin() {
         show_life: data.show_life,
         show_oncampus: data.show_oncampus,
         show_arrival: data.show_arrival,
+        show_arrival_checklist: data.show_arrival_checklist,
+        show_immunization: data.show_immunization,
         expires: Date.now() + SESSION_TTL_MS
       };
       localStorage.setItem('juic_session', JSON.stringify(session));

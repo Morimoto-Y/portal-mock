@@ -32,6 +32,8 @@
     --purple-text: #534AB7;
     --green-bg: #EAF3DE;
     --green-text: #3B6D11;
+    --red-bg: #FDECEA;
+    --red-text: #A32D2D;
     --review-bg: #FFF4E0;
     --review-text: #7A4800;
     --hidden-bg: #F1EFE8;
@@ -58,6 +60,8 @@
       --purple-text: #AFA9EC;
       --green-bg: #162b05;
       --green-text: #97C459;
+      --red-bg: #3a1616;
+      --red-text: #F09595;
       --review-bg: #3d2200;
       --review-text: #FAC775;
       --hidden-bg: #2c2c2a;
@@ -256,6 +260,7 @@
   .icon-amber  { background: var(--amber-bg);  color: var(--amber-text); }
   .icon-purple { background: var(--purple-bg); color: var(--purple-text); }
   .icon-green  { background: var(--green-bg);  color: var(--green-text); }
+  .icon-red    { background: var(--red-bg);    color: var(--red-text); }
 
   .card-body { flex: 1; }
   .card-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
@@ -378,6 +383,22 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-notifications" aria-hidden="true"></i>
     </a>
+    <a class="info-card locked" id="card-arrivalchecklist" href="arrival_checklist.html">
+      <div class="card-icon icon-purple"><i class="ti ti-clipboard-check" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-arrivalchecklist">Arrival Checklist</p>
+        <p class="card-desc"  id="desc-arrivalchecklist">Initial procedures for collaborating researchers.</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-arrivalchecklist" aria-hidden="true"></i>
+    </a>
+    <a class="info-card locked" id="card-immunization" href="immunization.html">
+      <div class="card-icon icon-red"><i class="ti ti-vaccine" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <p class="card-title" id="title-immunization">Immunization Requirements</p>
+        <p class="card-desc"  id="desc-immunization">Required immunizations for access to Juntendo Hospital.</p>
+      </div>
+      <i class="ti ti-lock card-arrow" id="arrow-immunization" aria-hidden="true"></i>
+    </a>
   </div>
 
   <hr class="divider">
@@ -443,7 +464,9 @@ var VISIBILITY_MAP = {
   dorm: 'show_dorm',
   living: 'show_life',
   admission: 'show_oncampus',
-  notifications: 'show_arrival'
+  notifications: 'show_arrival',
+  arrivalchecklist: 'show_arrival_checklist',
+  immunization: 'show_immunization'
 };
 
 function applyVisibility() {
@@ -478,6 +501,8 @@ var T = {
     titleLiving: 'Life in Japan',           descLiving: 'Ward office, health insurance, JP Bank — pre/post arrival',
     titleAdm: 'On-campus Procedures',       descAdm: 'Monthly check-in and residence card procedures for enrolled students.',
     titleNotif: 'Notify University of Arrival', descNotif: 'Arrival date and first-day adjustment status',
+    titleArrivalChecklist: 'Arrival Checklist', descArrivalChecklist: 'Initial procedures for collaborating researchers.',
+    titleImmunization: 'Immunization Requirements', descImmunization: 'Required immunizations for access to Juntendo Hospital.',
     labelContact: 'Contact', msgTitle: 'JUIC Contact Information',
     contactOrg: 'Juntendo University International Center (JUIC)',
     contactEmailLabel: 'Email:', contactLocationLabel: 'Location:',
@@ -494,6 +519,8 @@ var T = {
     titleLiving: '日本での生活案内', descLiving: '区役所・健康保険・ゆうちょ銀行 — 入国前後の手続き',
     titleAdm: '学内手続き',          descAdm: '在籍中の月次チェックインおよび在留カード手続きについて',
     titleNotif: '来日予定日・初日調整の連絡', descNotif: '来日予定日と初日調整状況について',
+    titleArrivalChecklist: 'Arrival Checklist', descArrivalChecklist: '協力研究員の方向けの到着後手続きについて',
+    titleImmunization: 'Immunization Requirements', descImmunization: '順天堂医院への立ち入りに必要な予防接種要件',
     labelContact: 'お問い合わせ', msgTitle: 'JUIC連絡先',
     contactOrg: '順天堂大学 国際交流センター（JUIC）',
     contactEmailLabel: 'メール:', contactLocationLabel: '場所:',
@@ -520,6 +547,10 @@ function applyLang(lang) {
   document.getElementById('desc-admission').textContent      = t.descAdm;
   document.getElementById('title-notifications').textContent = t.titleNotif;
   document.getElementById('desc-notifications').textContent  = t.descNotif;
+  document.getElementById('title-arrivalchecklist').textContent = t.titleArrivalChecklist;
+  document.getElementById('desc-arrivalchecklist').textContent  = t.descArrivalChecklist;
+  document.getElementById('title-immunization').textContent  = t.titleImmunization;
+  document.getElementById('desc-immunization').textContent   = t.descImmunization;
   document.getElementById('label-contact').textContent       = t.labelContact;
   document.getElementById('msg-title-text').textContent      = t.msgTitle;
   document.getElementById('contact-org').textContent         = t.contactOrg;
@@ -532,7 +563,7 @@ function applyLang(lang) {
 function applyStatus() {
   if (!session) return;
   var status = STATUS_MAP[session.portal_status] || 'review';
-  var ids = ['speedvisa','dorm','living','admission','notifications'];
+  var ids = ['speedvisa','dorm','living','admission','notifications','arrivalchecklist','immunization'];
 
   document.getElementById('badge-review').style.display    = status === 'review'   ? 'inline-flex' : 'none';
   document.getElementById('badge-approved').style.display  = status === 'approved' ? 'inline-flex' : 'none';
