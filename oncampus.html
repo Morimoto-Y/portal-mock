@@ -257,6 +257,17 @@
     </a>
   </div>
 
+  <!-- Name Plate / IC Card -->
+  <div class="field-card">
+    <p class="field-title"><i class="ti ti-badge" aria-hidden="true"></i><span id="title-nameplate">Name Plate / IC Card</span></p>
+    <p class="body-text" id="nameplate-intro"></p>
+    <p class="body-text" id="nameplate-eligibility"></p>
+    <div id="nameplate-status-block" style="display:none;">
+      <p class="sub-heading" id="nameplate-status-heading">Name Plate Status:</p>
+      <p class="note-box" id="nameplate-status-text"></p>
+    </div>
+  </div>
+
   <div class="field-card">
     <p class="field-title"><i class="ti ti-id-badge-2" aria-hidden="true"></i><span id="title-checkin">Monthly attendance check-in</span></p>
 
@@ -328,7 +339,13 @@ var T = {
     ],
     titleResidenceCard: 'Residence Card Upload (Status: Student only)',
     residenceCardText: 'After registering your address at your local \nmunicipal office, you are required to upload \nyour residence card to SpeedVisa.\nPlease log in to SpeedVisa and upload your \nresidence card with your registered address.',
-    labelSpeedvisaLogin: 'SpeedVisa Login'
+    labelSpeedvisaLogin: 'SpeedVisa Login',
+    titleNameplate: 'Name Plate / IC Card',
+    nameplateIntro: 'Your name plate doubles as an IC card and is used to control access to certain buildings and restricted areas on campus.',
+    nameplateEligibility: 'Those with ‘Student’ residence status will receive their name plate at JUIC. You are eligible to collect your name plate once your residence card showing your registered address has been uploaded to SpeedVisa.',
+    nameplateStatusHeading: 'Name Plate Status:',
+    nameplateStatusPending: '🟡 Your name plate is being prepared.',
+    nameplateStatusReady: '🟢 Your name plate is ready.\nPlease collect it at JUIC.'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
@@ -350,7 +367,13 @@ var T = {
     ],
     titleResidenceCard: '在留カードのアップロード（在留資格「留学」の方のみ）',
     residenceCardText: '区役所・市役所で住所登録を行った後、\n住所が記載された在留カードをSpeedVisaへ\nアップロードしてください。\nSpeedVisaにログインし、在留カードをアップロードしてください。',
-    labelSpeedvisaLogin: 'SpeedVisaログイン'
+    labelSpeedvisaLogin: 'SpeedVisaログイン',
+    titleNameplate: 'ネームプレートの受け取りについて',
+    nameplateIntro: '本学では、写真付きのネームプレートにIC機能を付しており、一部の建物への入館や特定エリアへの入退室管理に使用しています。',
+    nameplateEligibility: '在留資格が「留学」の方のネームプレートの受け取り場所はJUICです。現住所が記載された在留カードをSpeedVisaにアップロードした方が、ネームプレートを受け取ることができます。',
+    nameplateStatusHeading: 'ネームプレートの発行状況：',
+    nameplateStatusPending: '🟡 準備中',
+    nameplateStatusReady: '🟢 発行済み。JUICにてお受け取りください。'
   }
 };
 
@@ -378,6 +401,23 @@ function applyLang(lang) {
   document.getElementById('title-residencecard').textContent = t.titleResidenceCard;
   document.getElementById('residencecard-text').textContent  = t.residenceCardText;
   document.getElementById('label-speedvisa-login').textContent = t.labelSpeedvisaLogin;
+
+  document.getElementById('title-nameplate').textContent      = t.titleNameplate;
+  document.getElementById('nameplate-intro').textContent      = t.nameplateIntro;
+  document.getElementById('nameplate-eligibility').textContent = t.nameplateEligibility;
+  document.getElementById('nameplate-status-heading').textContent = t.nameplateStatusHeading;
+
+  var statusBlock = document.getElementById('nameplate-status-block');
+  var statusRaw = session && session.nameplate_status;
+  if (!statusRaw) {
+    statusBlock.style.display = 'none';
+  } else {
+    statusBlock.style.display = '';
+    var statusText = statusRaw === '発行済み' ? t.nameplateStatusReady
+      : statusRaw === '準備中' ? t.nameplateStatusPending
+      : statusRaw;
+    document.getElementById('nameplate-status-text').textContent = statusText;
+  }
 }
 
 function setLang(lang) {

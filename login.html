@@ -395,6 +395,7 @@ async function doLogin() {
         show_arrival: data.show_arrival,
         show_arrival_checklist: data.show_arrival_checklist,
         show_immunization: data.show_immunization,
+        nameplate_status: data.nameplate_status,
         expires: Date.now() + SESSION_TTL_MS
       };
       localStorage.setItem('juic_session', JSON.stringify(session));
