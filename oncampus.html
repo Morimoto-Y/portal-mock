@@ -153,6 +153,13 @@
     white-space: pre-line;
   }
 
+  .status-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
   .link-btn {
     display: flex; align-items: center; gap: 10px;
     padding: 12px; border: 0.5px solid var(--border-md);
@@ -265,6 +272,7 @@
     <div id="nameplate-status-block" style="display:none;">
       <p class="sub-heading" id="nameplate-status-heading">Name Plate Status:</p>
       <p class="note-box" id="nameplate-status-text"></p>
+      <p class="status-hint" id="nameplate-status-hint" style="display:none;"></p>
     </div>
   </div>
 
@@ -345,7 +353,8 @@ var T = {
     nameplateEligibility: 'You are eligible to collect your name plate once your residence card showing your registered address has been uploaded to SpeedVisa. Those with \'Student\' residence status will receive their name plate at JUIC.',
     nameplateStatusHeading: 'Name Plate Status:',
     nameplateStatusPending: '🟡 Your name plate is being prepared.',
-    nameplateStatusReady: '🟢 Your name plate is ready.\nPlease collect it at JUIC.'
+    nameplateStatusReady: '🟢 Your name plate is ready.\nPlease collect it at JUIC.',
+    nameplateStatusHint: 'Please log in again to check for the latest update.'
   },
   ja: {
     logout: 'ログアウト', back: 'ポータルへ戻る',
@@ -373,7 +382,8 @@ var T = {
     nameplateEligibility: '現住所が記載された在留カードをSpeedVisaにアップロードした人は、ネームプレートを受け取ることができます。在留資格が「留学」の方のネームプレートの受け取り場所はJUICです。',
     nameplateStatusHeading: 'ネームプレートの発行状況：',
     nameplateStatusPending: '🟡 準備中',
-    nameplateStatusReady: '🟢 発行済み。JUICにてお受け取りください。'
+    nameplateStatusReady: '🟢 発行済み。JUICにてお受け取りください。',
+    nameplateStatusHint: '再ログインすると最新情報が表示されます。'
   }
 };
 
@@ -408,6 +418,7 @@ function applyLang(lang) {
   document.getElementById('nameplate-status-heading').textContent = t.nameplateStatusHeading;
 
   var statusBlock = document.getElementById('nameplate-status-block');
+  var statusHint = document.getElementById('nameplate-status-hint');
   var statusRaw = session && session.nameplate_status;
   if (!statusRaw) {
     statusBlock.style.display = 'none';
@@ -417,6 +428,13 @@ function applyLang(lang) {
       : statusRaw === '準備中' ? t.nameplateStatusPending
       : statusRaw;
     document.getElementById('nameplate-status-text').textContent = statusText;
+
+    if (statusRaw === '準備中') {
+      statusHint.textContent = t.nameplateStatusHint;
+      statusHint.style.display = '';
+    } else {
+      statusHint.style.display = 'none';
+    }
   }
 }
 
