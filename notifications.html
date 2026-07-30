@@ -258,6 +258,7 @@
   <div class="field-card">
     <p class="field-title"><i class="ti ti-calendar-event" aria-hidden="true"></i><span id="title-arrival">Expected arrival date</span></p>
     <p class="field-desc" id="desc-arrival">Enter the date you plan to arrive in Japan.</p>
+    <p class="field-desc" id="desc-arrival-note">If you have already arrived in Japan, please enter your most recent date of entry.</p>
     <input type="date" id="arrival-date-input">
     <div class="save-status" id="arrival-save-status"><i class="ti ti-check" aria-hidden="true"></i><span id="arrival-save-text"></span></div>
   </div>
@@ -325,6 +326,7 @@ var T = {
     pageTitle: 'Notify University of Arrival',
     pageSub: 'Let JUIC know your arrival plans.',
     titleArrival: 'Expected arrival date', descArrival: 'Enter the date you plan to arrive in Japan.',
+    descArrivalNote: 'If you have already arrived in Japan, please enter your most recent date of entry.',
     titleFirstday: 'First-day adjustment status', descFirstday: 'Status of coordinating your first day at the university.',
     labNote: 'Please coordinate with your laboratory contact ({{LAB_EMAIL}}) regarding your first-day schedule, including the time and location where you should report.',
     statusNotYet: 'Not yet', statusInProgress: 'In progress', statusConfirmed: 'Confirmed',
@@ -335,6 +337,7 @@ var T = {
     pageTitle: '来日予定日・初日調整の連絡',
     pageSub: '来日予定についてJUICにお知らせください。',
     titleArrival: '来日予定日', descArrival: '日本への来日予定日を入力してください。',
+    descArrivalNote: 'すでに来日している方は、直近の入国日を入力してください。',
     titleFirstday: '初日調整状況', descFirstday: '大学での初日の調整状況について。',
     labNote: '初日にどこに何時に行けばよいか、受入講座の担当者（{{LAB_EMAIL}}）と事前にご調整ください。',
     statusNotYet: 'まだ', statusInProgress: '調整中', statusConfirmed: '調整済み',
@@ -356,6 +359,7 @@ function applyLang(lang) {
   document.getElementById('page-sub').textContent       = t.pageSub;
   document.getElementById('title-arrival').textContent  = t.titleArrival;
   document.getElementById('desc-arrival').textContent   = t.descArrival;
+  document.getElementById('desc-arrival-note').textContent = t.descArrivalNote;
   document.getElementById('title-firstday').textContent = t.titleFirstday;
   document.getElementById('desc-firstday').textContent  = t.descFirstday;
   document.getElementById('status-btn-まだ').textContent    = t.statusNotYet;
