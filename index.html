@@ -351,13 +351,13 @@
       </div>
       <i class="ti ti-lock card-arrow" id="arrow-speedvisa" aria-hidden="true"></i>
     </a>
-    <a class="info-card locked" id="card-dorm" href="dormitory.html">
+    <a class="info-card" id="card-dorm" href="dormitory.html">
       <div class="card-icon icon-teal"><i class="ti ti-building" aria-hidden="true"></i></div>
       <div class="card-body">
         <p class="card-title" id="title-dorm">Dormitory Application</p>
         <p class="card-desc"  id="desc-dorm">Information about the international student dormitory.</p>
       </div>
-      <i class="ti ti-lock card-arrow" id="arrow-dorm" aria-hidden="true"></i>
+      <i class="ti ti-chevron-right card-arrow" id="arrow-dorm" aria-hidden="true"></i>
     </a>
     <a class="info-card locked" id="card-living" href="life.html">
       <div class="card-icon icon-amber"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
@@ -563,7 +563,7 @@ function applyLang(lang) {
 function applyStatus() {
   if (!session) return;
   var status = STATUS_MAP[session.portal_status] || 'review';
-  var ids = ['speedvisa','dorm','living','admission','notifications','arrivalchecklist','immunization'];
+  var ids = ['speedvisa','living','admission','notifications','arrivalchecklist','immunization'];
 
   document.getElementById('badge-review').style.display    = status === 'review'   ? 'inline-flex' : 'none';
   document.getElementById('badge-approved').style.display  = status === 'approved' ? 'inline-flex' : 'none';
@@ -583,6 +583,12 @@ function applyStatus() {
       arrow.className = 'ti ti-chevron-right card-arrow';
     }
   });
+
+  // Dormitory Application is always accessible regardless of portal_status
+  var dormCard = document.getElementById('card-dorm');
+  var dormArrow = document.getElementById('arrow-dorm');
+  dormCard.classList.remove('locked');
+  dormArrow.className = 'ti ti-chevron-right card-arrow';
 }
 
 function setLang(lang) {
