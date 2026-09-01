@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUIC Compass — Enrollment Confirmation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.10);
+    --border-md: rgba(0,0,0,0.18);
+    --text-primary: #1a1917;
+    --text-secondary: #6b6a65;
+    --text-tertiary: #a09f9a;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917;
+      --surface: #242320;
+      --surface2: #2e2d2a;
+      --border: rgba(255,255,255,0.09);
+      --border-md: rgba(255,255,255,0.16);
+      --text-primary: #f0ede8;
+      --text-secondary: #9e9b95;
+      --text-tertiary: #65635e;
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 0 0 3rem;
+  }
+
+  .mock-banner {
+    background: #1a1917;
+    color: #FAC775;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+  }
+
+  .portal-wrap { max-width: 480px; margin: 0 auto; padding: 1.25rem 1rem 0; }
+
+  .portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .portal-logo { font-size: 12px; color: var(--text-secondary); font-weight: 500; line-height: 1.6; }
+
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+  .lang-toggle { display: flex; gap: 4px; }
+
+  .lang-btn {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 4px 11px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .lang-btn.active { background: var(--surface2); color: var(--text-primary); }
+
+  .logout-btn {
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 3px 9px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .logout-btn:hover { color: var(--text-secondary); border-color: var(--border-md); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .back-link:hover { color: var(--text-primary); }
+
+  .print-row { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
+
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    padding: 7px 14px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    background: var(--text-primary);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  .print-btn:hover { opacity: 0.85; }
+
+  .footer-note { font-size: 11px; color: var(--text-tertiary); text-align: center; margin-top: 2rem; }
+
+  /* ── Letter document (self-contained paper look, independent of app theme) ── */
+  .letter-doc {
+    --lp: #6B3FA0;
+    --lb: #1a1917;
+    --lg: #6b6a65;
+    --llg: #a09f9a;
+    --lborder: rgba(0,0,0,0.10);
+    font-family: 'Noto Serif JP', 'Yu Mincho', '游明朝', serif;
+    background: #ffffff;
+    color: var(--lb);
+    border: 0.5px solid var(--lborder);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .accent-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--lp) 0%, #9B6FD0 100%);
+  }
+
+  .letter-inner { padding: 2.25rem 1.75rem 1.75rem; }
+
+  .issue-row { display: flex; justify-content: flex-end; margin-bottom: 1.5rem; }
+
+  .issue-date { font-size: 12px; color: var(--llg); text-align: right; line-height: 1.6; font-weight: 300; }
+
+  .univ-header {
+    text-align: center;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid #e8e6e0;
+  }
+
+  .univ-name-ja { font-size: 26px; font-weight: 400; color: var(--lb); letter-spacing: 0.1em; margin-bottom: 4px; }
+  .univ-name-en { font-size: 14px; font-weight: 300; color: var(--lp); letter-spacing: 0.06em; }
+
+  .letter-header { border-bottom: 1px solid #e8e6e0; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .letter-title-en { font-size: 18px; font-weight: 500; color: var(--lb); margin-bottom: 3px; }
+  .letter-title-ja { font-size: 13px; font-weight: 300; color: var(--lp); }
+
+  .confirm-block { background: #f5f4f0; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; }
+  .confirm-text { font-size: 13.5px; line-height: 1.9; color: var(--lb); font-weight: 300; }
+  .confirm-text .name { font-weight: 500; }
+  .confirm-text + .confirm-text { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 0.5px solid #e0deda; }
+
+  .details { width: 100%; border-collapse: collapse; margin-bottom: 1.75rem; }
+  .details tr { border-bottom: 0.5px solid #e8e6e0; }
+  .details tr:last-child { border-bottom: none; }
+  .details td { padding: 11px 0; font-size: 13px; vertical-align: top; }
+  .details td.label { color: var(--lg); width: 48%; padding-right: 1rem; font-weight: 300; }
+  .details td.label .label-en { display: block; font-size: 13px; }
+  .details td.label .label-ja { display: block; font-size: 11px; color: var(--llg); margin-top: 2px; }
+  .details td.value { font-weight: 500; color: var(--lb); font-size: 14px; }
+
+  .letter-footer { border-top: 1px solid #e8e6e0; padding-top: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+  .footer-inquiry-label { font-size: 13px; font-weight: 400; color: var(--lp); letter-spacing: 0.02em; }
+  .issuer { font-size: 12.5px; color: var(--lb); line-height: 1.9; font-weight: 300; }
+  .issuer .org-en { font-weight: 500; font-size: 13px; }
+  .issuer .org-ja { color: var(--lg); font-size: 12px; }
+  .issuer .address { color: var(--lg); font-size: 12px; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .mock-banner, .portal-header, .back-link, .print-row, .footer-note { display: none !important; }
+    .portal-wrap { max-width: 100%; padding: 0; }
+    .letter-doc { border: none; border-radius: 0; }
+    .accent-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .confirm-block { background: #f8f7f5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">BETA</div>
+
+<div class="portal-wrap">
+
+  <div class="portal-header">
+    <div class="portal-logo">Juntendo University<br>JUIC Compass</div>
+    <div class="header-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="ti ti-logout" aria-hidden="true" style="font-size:13px"></i>
+        <span id="logout-label">Sign out</span>
+      </button>
+    </div>
+  </div>
+
+  <a class="back-link" href="index.html">
+    <i class="ti ti-arrow-left" aria-hidden="true"></i>
+    <span id="back-label">Back to portal</span>
+  </a>
+
+  <div class="print-row">
+    <button class="print-btn" onclick="window.print()">
+      <i class="ti ti-printer" aria-hidden="true"></i>
+      <span id="print-label">Print / 印刷</span>
+    </button>
+  </div>
+
+  <div class="letter-doc">
+    <div class="accent-bar"></div>
+    <div class="letter-inner">
+
+      <div class="issue-row">
+        <div class="issue-date" id="issue-date-text">Date of Issue: —　発行日：—</div>
+      </div>
+
+      <div class="univ-header">
+        <p class="univ-name-ja">順天堂大学</p>
+        <p class="univ-name-en">Juntendo University</p>
+      </div>
+
+      <div class="letter-header">
+        <p class="letter-title-en">Enrollment Confirmation Letter</p>
+        <p class="letter-title-ja">在籍確認書</p>
+      </div>
+
+      <div class="confirm-block">
+        <p class="confirm-text">
+          This is to confirm that <span class="name" id="confirm-name-en">—</span> has been approved to enroll at Juntendo University as an International Research Student, commencing <span class="name" id="confirm-start-en">—</span> for a period of <span class="name" id="confirm-period-en">—</span>.
+        </p>
+        <p class="confirm-text">
+          <span class="name" id="confirm-name-ja">—</span> 氏は、順天堂大学の外国人研究生として、<span class="name" id="confirm-start-ja">—</span>より <span class="name" id="confirm-period-ja">—</span> 在籍することが承認されました。
+        </p>
+      </div>
+
+      <table class="details">
+        <tr>
+          <td class="label"><span class="label-en">Name</span><span class="label-ja">氏名</span></td>
+          <td class="value" id="table-name">—</td>
+        </tr>
+        <tr>
+          <td class="label"><span class="label-en">Preferred Enrollment Date</span><span class="label-ja">研究開始希望日</span></td>
+          <td class="value" id="table-start">—</td>
+        </tr>
+        <tr>
+          <td class="label"><span class="label-en">Expected Period of Enrollment</span><span class="label-ja">在籍期間</span></td>
+          <td class="value" id="table-period">—</td>
+        </tr>
+        <tr>
+          <td class="label"><span class="label-en">Date of Approval</span><span class="label-ja">承認日</span></td>
+          <td class="value" id="table-approval">—</td>
+        </tr>
+      </table>
+
+      <div class="letter-footer">
+        <span class="footer-inquiry-label">Inquiries / 本件への問い合わせ</span>
+        <div class="issuer">
+          <span class="org-en">Juntendo University International Center (JUIC)</span><br>
+          <span class="org-ja">順天堂大学 国際交流センター</span><br>
+          <span class="address">2-1-1 Hongo Bunkyo-ku Tokyo Japan 113-8421</span><br>
+          <span class="address">113-8421 東京都文京区本郷2-1-1</span><br>
+          juic@juntendo.ac.jp<br>
+          03-3813-3111
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="footer-note">Juntendo University International Center (JUIC)</p>
+
+</div>
+
+<script>
+/* ── access control ──
+   1) not logged in / expired session -> login.html
+   2) not approved, or category not entitled to this document -> index.html */
+var session = null;
+(function() {
+  var raw = localStorage.getItem('juic_session');
+  if (!raw) { window.location.href = 'login.html'; return; }
+  try {
+    var s = JSON.parse(raw);
+    if (!s.expires || Date.now() > s.expires) {
+      localStorage.removeItem('juic_session');
+      window.location.href = 'login.html';
+      return;
+    }
+    if (s.portal_status !== '承認' || s.category !== '外国人研究生') {
+      window.location.href = 'index.html';
+      return;
+    }
+    session = s;
+  } catch (e) {
+    localStorage.removeItem('juic_session');
+    window.location.href = 'login.html';
+  }
+})();
+
+function doLogout() {
+  localStorage.removeItem('juic_session');
+  window.location.href = 'login.html';
+}
+
+/* ── i18n (shell chrome only — the letter itself is always bilingual) ── */
+var T = {
+  en: { logout: 'Sign out', back: 'Back to portal', print: 'Print / 印刷' },
+  ja: { logout: 'ログアウト', back: 'ポータルへ戻る', print: '印刷 / Print' }
+};
+
+function setLang(lang) {
+  var t = T[lang];
+  document.querySelectorAll('.lang-btn').forEach(function(b, i) {
+    b.classList.toggle('active', lang === 'ja' ? i === 1 : i === 0);
+  });
+  document.getElementById('logout-label').textContent = t.logout;
+  document.getElementById('back-label').textContent   = t.back;
+  document.getElementById('print-label').textContent  = t.print;
+}
+
+/* ── date formatting ──
+   Kintone date fields come back as "YYYY-MM-DD". */
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+function splitDate(str) {
+  if (typeof str !== 'string') return null;
+  var parts = str.split('-');
+  if (parts.length !== 3) return null;
+  return { y: parts[0], m: parts[1], d: parts[2] };
+}
+
+function formatSlash(str) {
+  var p = splitDate(str);
+  return p ? (p.y + '/' + p.m + '/' + p.d) : '—';
+}
+
+function formatJa(str) {
+  var p = splitDate(str);
+  return p ? (p.y + '年' + p.m + '月' + p.d + '日') : '—';
+}
+
+function todayParts() {
+  var now = new Date();
+  return { y: now.getFullYear(), m: pad2(now.getMonth() + 1), d: pad2(now.getDate()) };
+}
+
+/* ── enrollment period → bilingual label ──
+   Extend this map as new period options are added in Kintone. */
+var PERIOD_MAP = {
+  '1年':   { en: '1 year',   ja: '1年間' },
+  '6ヶ月': { en: '6 months', ja: '6ヶ月間' }
+};
+
+function formatPeriod(raw) {
+  return PERIOD_MAP[raw] || { en: raw || '—', ja: raw || '—' };
+}
+
+function renderDocument() {
+  if (!session) return;
+
+  var family = (session.family_name || '').trim().toUpperCase();
+  var given  = (session.given_name  || '').trim().toUpperCase();
+  var nameSpaced  = (family + ' ' + given).trim();
+  var nameComma   = family && given ? (family + ', ' + given) : nameSpaced;
+
+  var startSlash = formatSlash(session.exp_start_day);
+  var startJa    = formatJa(session.exp_start_day);
+  var approvalSlash = formatSlash(session.faculty_meeting_date);
+  var period = formatPeriod(session.period);
+
+  var today = todayParts();
+  document.getElementById('issue-date-text').textContent =
+    'Date of Issue: ' + today.y + '/' + today.m + '/' + today.d +
+    '　発行日：' + today.y + '年' + today.m + '月' + today.d + '日';
+
+  document.getElementById('confirm-name-en').textContent  = nameComma;
+  document.getElementById('confirm-start-en').textContent = startSlash;
+  document.getElementById('confirm-period-en').textContent = period.en;
+
+  document.getElementById('confirm-name-ja').textContent   = nameSpaced;
+  document.getElementById('confirm-start-ja').textContent  = startJa;
+  document.getElementById('confirm-period-ja').textContent = period.ja;
+
+  document.getElementById('table-name').textContent     = nameComma;
+  document.getElementById('table-start').textContent    = startSlash;
+  document.getElementById('table-period').textContent   = period.en + ' / ' + period.ja;
+  document.getElementById('table-approval').textContent = approvalSlash;
+}
+
+setLang('en');
+renderDocument();
+</script>
+</body>
+</html>

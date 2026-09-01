@@ -383,6 +383,8 @@ async function doLogin() {
         email: email,
         token: token,
         student_name: data.student_name,
+        given_name: data.given_name,
+        family_name: data.family_name,
         portal_status: data.portal_status,
         arrival_date: data.arrival_date,
         first_day_status: data.first_day_status,
@@ -396,6 +398,10 @@ async function doLogin() {
         show_arrival_checklist: data.show_arrival_checklist,
         show_immunization: data.show_immunization,
         nameplate_status: data.nameplate_status,
+        category: data.category,
+        exp_start_day: data.exp_start_day,
+        period: data.period,
+        faculty_meeting_date: data.faculty_meeting_date,
         expires: Date.now() + SESSION_TTL_MS
       };
       localStorage.setItem('juic_session', JSON.stringify(session));

@@ -231,6 +231,19 @@
   .notice-review  { background: var(--review-bg);  color: var(--review-text); }
   .notice-hidden  { background: var(--hidden-bg);  color: var(--hidden-text); }
 
+  .category-links { display: flex; flex-direction: column; gap: 8px; }
+  .category-links:not(:empty) { margin-top: 10px; }
+
+  .doc-link {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-md); padding: 10px 12px;
+    font-size: 13px; font-weight: 500; color: var(--text-primary);
+    text-decoration: none; transition: border-color 0.15s;
+  }
+  .doc-link:hover { border-color: var(--border-md); }
+  .doc-link-arrow { margin-left: auto; color: var(--text-tertiary); font-size: 15px; flex-shrink: 0; }
+
   .section-label {
     font-size: 11px; font-weight: 500; color: var(--text-tertiary);
     letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 0.6rem;
@@ -338,6 +351,7 @@
       <i class="ti ti-ban" aria-hidden="true"></i>
       <span id="notice-hidden-text">This portal is currently unavailable. Please contact JUIC for assistance.</span>
     </div>
+    <div class="category-links" id="category-links"></div>
   </div>
 
   <!-- Sections -->
@@ -591,6 +605,33 @@ function applyStatus() {
   dormArrow.className = 'ti ti-chevron-right card-arrow';
 }
 
+/* ── category-specific document links (approved status only) ──
+   Add future categories/links here; each entry is a list so a
+   category can surface more than one document later. */
+var CATEGORY_LINKS = {
+  '外国人研究生': [
+    { href: 'enrollment.html', label: '📄 Enrollment Confirmation / 在籍確認書' }
+  ]
+};
+
+function applyCategoryLinks() {
+  var container = document.getElementById('category-links');
+  container.innerHTML = '';
+  if (!session) return;
+
+  var status = STATUS_MAP[session.portal_status] || 'review';
+  if (status !== 'approved') return;
+
+  var links = CATEGORY_LINKS[session.category] || [];
+  links.forEach(function(link) {
+    var a = document.createElement('a');
+    a.className = 'doc-link';
+    a.href = link.href;
+    a.innerHTML = '<span>' + link.label + '</span><i class="ti ti-chevron-right doc-link-arrow" aria-hidden="true"></i>';
+    container.appendChild(a);
+  });
+}
+
 function setLang(lang) {
   isJa = lang === 'ja';
   document.querySelectorAll('.lang-btn').forEach(function(b,i){
@@ -606,6 +647,7 @@ if (session) {
 applyLang('en');
 applyStatus();
 applyVisibility();
+applyCategoryLinks();
 </script>
 </body>
 </html>
