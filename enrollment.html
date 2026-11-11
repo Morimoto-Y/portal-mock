@@ -264,8 +264,12 @@
 
       <table class="details">
         <tr>
-          <td class="label"><span class="label-en">Name</span><span class="label-ja">氏名</span></td>
-          <td class="value" id="table-name">—</td>
+          <td class="label"><span class="label-en">Family name (Katakana)</span><span class="label-ja">姓（カタカナ）</span></td>
+          <td class="value" id="table-family">—</td>
+        </tr>
+        <tr>
+          <td class="label"><span class="label-en">Given name (Katakana)</span><span class="label-ja">名（カタカナ）</span></td>
+          <td class="value" id="table-given">—</td>
         </tr>
         <tr>
           <td class="label"><span class="label-en">Preferred Enrollment Date</span><span class="label-ja">研究開始希望日</span></td>
@@ -384,6 +388,13 @@ function formatPeriod(raw) {
   return PERIOD_MAP[raw] || { en: raw || '—', ja: raw || '—' };
 }
 
+/* 英字 + （カナ）。カナが空なら英字のみ */
+function withKana(roman, kana) {
+  var r = roman || '—';
+  var k = (kana || '').trim();
+  return k ? r + '（' + k + '）' : r;
+}
+
 function renderDocument() {
   if (!session) return;
 
@@ -410,7 +421,8 @@ function renderDocument() {
   document.getElementById('confirm-start-ja').textContent  = startJa;
   document.getElementById('confirm-period-ja').textContent = period.ja;
 
-  document.getElementById('table-name').textContent     = nameComma;
+  document.getElementById('table-family').textContent   = withKana(family, session.family_kana);
+  document.getElementById('table-given').textContent    = withKana(given, session.given_kana);
   document.getElementById('table-start').textContent    = startSlash;
   document.getElementById('table-period').textContent   = period.en + ' / ' + period.ja;
   document.getElementById('table-approval').textContent = approvalSlash;
